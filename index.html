@@ -1161,7 +1161,12 @@ code:not([class]) {
   </div>
 
   <div class="sidebar-nav" id="sidebarNav">
-    <a class="nav-item active" href="#s1" onclick="closeSidebarMobile()">
+    <a class="nav-item active" href="#s0" onclick="closeSidebarMobile()">
+      <span class="nav-num">0</span>
+      <span class="nav-icon">📖</span>
+      <span>מושגי יסוד — קרא קודם</span>
+    </a>
+    <a class="nav-item" href="#s1" onclick="closeSidebarMobile()">
       <span class="nav-num">1</span>
       <span class="nav-icon">💡</span>
       <span>מה זה Claude Code</span>
@@ -1324,6 +1329,134 @@ code:not([class]) {
       </div>
     </div>
 
+    <!-- ===== SECTION 0 ===== -->
+    <section class="section" id="s0">
+      <div class="section-header">
+        <div class="section-icon">📖</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 0 — קרא לפני הכל</div>
+          <h2 class="section-title">מושגי יסוד שחייבים להכיר</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">לא יודע לתכנת? מושלם — זה בדיוק בשבילך</div>
+          <div class="callout-text">Claude Code מאפשר לאנשים בלי רקע בקוד לבנות אפליקציות אמיתיות. אבל יש כמה מושגים טכניים שחוזרים על עצמם. הפרק הזה מסביר אותם בפשטות — מלמעלה עד למטה. תקרא אותו פעם אחת ותבין הכל.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+
+        <div class="mini-card">
+          <div class="mc-icon">🖥️</div>
+          <div class="mc-title">מה זה טרמינל / שורת פקודה?</div>
+          <div class="mc-text">חלון טקסט שבו כותבים פקודות ישירות למחשב — במקום ללחוץ על כפתורים ועכבר. ב-Windows קוראים לזה <strong>Command Prompt</strong> או <strong>PowerShell</strong>. ב-Mac קוראים לזה <strong>Terminal</strong>. Claude Code עובד <em>בתוך</em> הטרמינל הזה.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🟢</div>
+          <div class="mc-title">מה זה Node.js?</div>
+          <div class="mc-text">תוכנה שמאפשרת להריץ קוד JavaScript מחוץ לדפדפן — ישירות על המחשב שלך. Claude Code בנוי על Node.js, לכן צריך להתקין אותו קודם. זה כמו "מנוע" שבלעדיו הכלי לא יכול לעבוד.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">📦</div>
+          <div class="mc-title">מה זה npm?</div>
+          <div class="mc-text">מנהל החבילות של Node.js. "חבילה" = תוכנה מוכנה שמישהו כתב ואתה יכול להשתמש בה. <code>npm install</code> = "תוריד והתקן את התוכנה הזו". npm מגיע אוטומטית עם Node.js — לא צריך להתקין בנפרד.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🔧</div>
+          <div class="mc-title">מה זה "התקנה גלובלית" (<code>-g</code>)?</div>
+          <div class="mc-text">כשמתקינים תוכנה עם <code>-g</code> (global), היא זמינה מכל תיקייה במחשב. בלי <code>-g</code>, התוכנה עובדת רק בתיקייה שבה התקנת אותה. Claude Code צריך התקנה גלובלית כי רוצים להשתמש בו בכל פרויקט.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🌿</div>
+          <div class="mc-title">מה זה Git?</div>
+          <div class="mc-text">מערכת לגיבוי וניהול גרסאות של קוד. כל פעם שעושים <strong>commit</strong>, Git שומר "צילום" של הקוד ברגע הזה. אפשר תמיד לחזור לגרסה ישנה. זה כמו Ctrl+Z אבל לאינסוף שלבים לאחור לנצח.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🐙</div>
+          <div class="mc-title">מה זה GitHub?</div>
+          <div class="mc-text">אתר שמאחסן את הקוד שלך ב-"ענן" (שרתים של GitHub). Git = הכלי על המחשב שלך. GitHub = המקום באינטרנט שבו שומרים את הגיבויים. <code>git push</code> = שליחת השינויים מהמחשב ל-GitHub.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🚀</div>
+          <div class="mc-title">מה זה Vercel?</div>
+          <div class="mc-text">שירות שמעלה את האתר שלך לאינטרנט תוך שניות — בחינם. אתה מחבר אותו ל-GitHub, ובכל פעם שמעדכנים את הקוד ב-GitHub, Vercel מעדכן את האתר באוטומט. אין צורך בשרת, אין הגדרות מסובכות.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🗂️</div>
+          <div class="mc-title">מה זה תיקיית פרויקט?</div>
+          <div class="mc-text">תיקייה רגילה על המחשב שמכילה את כל קבצי הפרויקט. כשפותחים טרמינל ו"נכנסים" לתיקייה (<code>cd שם-תיקייה</code>), כל הפקודות שמריצים משפיעות על הקבצים בתיקייה הזו בלבד.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🔑</div>
+          <div class="mc-title">מה זה API?</div>
+          <div class="mc-text">ממשק שמאפשר לתוכנה אחת "לדבר" עם תוכנה אחרת. Claude Code משתמש ב-API של Anthropic כדי לשלוח את ההוראות שלך ל-Claude ולקבל תשובות. API Key = מפתח זיהוי אישי שמאשר שאתה הלקוח.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">📝</div>
+          <div class="mc-title">מה זה קובץ .md (Markdown)?</div>
+          <div class="mc-text">קובץ טקסט פשוט עם עיצוב בסיסי. <code># כותרת</code> = כותרת גדולה. <code>**מודגש**</code> = טקסט מודגש. <code>- פריט</code> = רשימה. Claude קורא קבצי .md ומבין את המבנה שלהם — לכן CLAUDE.md כתוב בפורמט הזה.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🌐</div>
+          <div class="mc-title">מה זה TypeScript?</div>
+          <div class="mc-text">גרסה מתקדמת של JavaScript (שפת התכנות של הדפדפן). TypeScript מוסיף "כללי בטיחות" שעוזרים למצוא שגיאות לפני שהקוד רץ. Claude Code מציע להשתמש בו בפרויקטים רציניים — אבל לא חייבים בהתחלה.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">⚛️</div>
+          <div class="mc-title">מה זה React / Next.js?</div>
+          <div class="mc-text">React = ספריית JavaScript לבניית ממשקי משתמש (כפתורים, טפסים, רשימות). Next.js = מסגרת שבנויה על React ומוסיפה לה יכולות כמו ניהול דפים, קישורים, ו-backend בסיסי. יחד הם הבסיס לרוב האפליקציות האינטרנטיות.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🐘</div>
+          <div class="mc-title">מה זה Supabase?</div>
+          <div class="mc-text">שירות בסיס נתונים בענן — המקום שבו שומרים את המידע של האפליקציה (משתמשים, הזמנות, כל דבר). מגיע עם מערכת הרשמה/כניסה מוכנה (Auth), אבטחה (RLS), ו-API אוטומטי. בחינם עד לנפח מסויים.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🏗️</div>
+          <div class="mc-title">מה זה "ארכיטקטורה"?</div>
+          <div class="mc-text">האופן שבו בנוי הפרויקט — אילו קבצים יש, איך הם מחוברים, מה אחראי על מה. כמו תוכנית הבנייה של בית לפני שמתחילים לבנות. Claude Code עובד הכי טוב כשיש ארכיטקטורה ברורה מראש.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🐛</div>
+          <div class="mc-title">מה זה Bug / שגיאה?</div>
+          <div class="mc-text">קוד שכתוב אבל לא עובד כמו שצריך. כשיש שגיאה, הטרמינל או הדפדפן מראים הודעת שגיאה (Error). הפתרון: להעתיק את הודעת השגיאה, להדביק אותה ל-Claude, ולכתוב "fix". ברוב המקרים הוא מתקן לבד.</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mc-icon">🧪</div>
+          <div class="mc-title">מה זה Tests?</div>
+          <div class="mc-text">קוד שבודק שקוד אחר עובד נכון. כמו מבחן שהקוד עובר לפני שמעלים אותו. <code>npm test</code> = הרצת כל הבדיקות. Claude יוצר tests אוטומטית — חשוב לוודא שהם עוברים לפני כל commit.</div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <div class="callout-title">לא חייבים לזכור הכל!</div>
+          <div class="callout-text">כשנתקל במושג לא מוכר במהלך הקריאה — חזור לפרק הזה. עם הזמן הכל הופך לטבעי. Claude Code עצמו יכול להסביר כל מושג אם תשאל אותו: "מה זה X ולמה צריך אותו?"</div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== SECTION 1 ===== -->
     <section class="section" id="s1">
       <div class="section-header">
@@ -1387,23 +1520,50 @@ code:not([class]) {
         </div>
       </div>
 
-      <div class="card">
-        <p><strong>דרישות מוקדמות:</strong> Node.js גרסה 18 ומעלה. בדוק עם <code>node --version</code>.</p>
+      <div class="callout callout-info">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">מה הולך לקרות עכשיו?</div>
+          <div class="callout-text">נעבור 4 שלבים פשוטים: נתקין Node.js → נתקין Claude Code → נתחבר לחשבון → נפתח את הכלי. כל שלב לוקח 2-3 דקות. עושים פעם אחת ואחר כך לא צריך לחזור.</div>
+        </div>
       </div>
 
       <div class="steps">
         <div class="step">
+          <div class="step-num">0</div>
+          <div class="step-body">
+            <div class="step-title">התקן Node.js <span class="step-badge">דרישה מוקדמת</span></div>
+            <div class="step-content">
+              <strong>מה זה Node.js?</strong> תוכנה שמריצה JavaScript על המחשב שלך. Claude Code בנוי עליה ולא יכול לעבוד בלעדיה — כמו שמכונית לא יכולה לנסוע בלי מנוע.<br><br>
+              <strong>כיצד לבדוק אם כבר מותקן:</strong> פתח טרמינל והקלד:
+            </div>
+            <div class="code-block">
+              <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">bash</span></div>
+              <button class="copy-btn" onclick="copyCode(this)">📋</button>
+              <pre><code class="language-bash">node --version</code></pre>
+            </div>
+            <div class="step-content">
+              אם מופיע מספר כמו <code>v20.11.0</code> — מעולה, Node כבר מותקן. צריך שיהיה גרסה 18 ומעלה.<br>
+              אם מופיע שגיאה — כנס לאתר <strong>nodejs.org</strong>, הורד את הגרסה LTS (הירוקה) והתקן כרגיל.
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <div class="step-title">התקן את Claude Code גלובלית <span class="step-badge">npm</span></div>
-            <div class="step-content">הרץ את הפקודה הבאה בטרמינל:</div>
+            <div class="step-title">התקן את Claude Code <span class="step-badge">npm</span></div>
+            <div class="step-content">
+              <strong>מה קורה כאן?</strong> הפקודה <code>npm install</code> אומרת "הורד והתקן את התוכנה הזו". ה-<code>-g</code> אומר "גלובלית" — זמינה בכל מקום במחשב. <code>@anthropic-ai/claude-code</code> הוא שם הכלי הרשמי.<br><br>
+              פתח טרמינל והרץ:
+            </div>
             <div class="code-block">
-              <div class="code-header">
-                <div class="code-dots"><span></span><span></span><span></span></div>
-                <span class="code-lang">bash</span>
-              </div>
-              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">bash</span></div>
+              <button class="copy-btn" onclick="copyCode(this)">📋</button>
               <pre><code class="language-bash">npm install -g @anthropic-ai/claude-code</code></pre>
+            </div>
+            <div class="step-content">
+              ההתקנה לוקחת 30-60 שניות. תראה הרבה טקסט שרץ — זה נורמלי. בסוף צריך לקבל הודעה שאומרת שההתקנה הצליחה, ואפשר לבדוק עם <code>claude --version</code>.
             </div>
           </div>
         </div>
@@ -1412,14 +1572,17 @@ code:not([class]) {
           <div class="step-num">2</div>
           <div class="step-body">
             <div class="step-title">התחבר לחשבון Anthropic <span class="step-badge">auth</span></div>
-            <div class="step-content">הפקודה תפתח דפדפן לאימות:</div>
+            <div class="step-content">
+              <strong>למה צריך חשבון?</strong> Claude Code הוא שירות בתשלום (יש תוכנית חינמית מוגבלת). הפקודה <code>claude auth</code> פותחת דפדפן שמבקש ממך להתחבר לחשבון claude.ai שלך — זה אותו חשבון שיש לך לצ'אט.<br><br>
+              אם אין לך חשבון — פתח אחד קודם ב-claude.ai, זה חינמי.
+            </div>
             <div class="code-block">
-              <div class="code-header">
-                <div class="code-dots"><span></span><span></span><span></span></div>
-                <span class="code-lang">bash</span>
-              </div>
-              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">bash</span></div>
+              <button class="copy-btn" onclick="copyCode(this)">📋</button>
               <pre><code class="language-bash">claude auth</code></pre>
+            </div>
+            <div class="step-content">
+              הדפדפן נפתח → התחבר → לחץ "Authorize" → חזור לטרמינל. תראה הודעת אישור שאומרת שההתחברות הצליחה.
             </div>
           </div>
         </div>
@@ -1427,15 +1590,23 @@ code:not([class]) {
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <div class="step-title">פתח את הפרויקט שלך <span class="step-badge">cd</span></div>
-            <div class="step-content">נווט לתיקיית הפרויקט שלך:</div>
+            <div class="step-title">נווט לתיקיית הפרויקט שלך <span class="step-badge">cd</span></div>
+            <div class="step-content">
+              <strong>מה זה <code>cd</code>?</strong> קיצור של "Change Directory" — כמו לפתוח תיקייה בסייר הקבצים, רק דרך הטרמינל. <strong>חשוב מאוד:</strong> תמיד להפעיל Claude Code מתוך תיקיית הפרויקט שלך — הוא עובד על הקבצים שנמצאים שם.
+            </div>
             <div class="code-block">
-              <div class="code-header">
-                <div class="code-dots"><span></span><span></span><span></span></div>
-                <span class="code-lang">bash</span>
+              <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">bash</span></div>
+              <button class="copy-btn" onclick="copyCode(this)">📋</button>
+              <pre><code class="language-bash"># דוגמה - החלף את הנתיב בנתיב האמיתי שלך
+cd C:\Users\שמך\Documents\my-project    # Windows
+cd /Users/שמך/Documents/my-project     # Mac/Linux</code></pre>
+            </div>
+            <div class="callout callout-tip" style="margin-top:14px;">
+              <span class="callout-icon">💡</span>
+              <div class="callout-body">
+                <div class="callout-title">טיפ מהיר — גרור תיקייה לטרמינל</div>
+                <div class="callout-text">ב-Windows/Mac: כתוב <code>cd </code> (עם רווח) ואז גרור את התיקייה לתוך חלון הטרמינל — הנתיב יוקלד אוטומטית. הכי פשוט!</div>
               </div>
-              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
-              <pre><code class="language-bash">cd /path/to/your/project</code></pre>
             </div>
           </div>
         </div>
@@ -1444,16 +1615,18 @@ code:not([class]) {
           <div class="step-num">4</div>
           <div class="step-body">
             <div class="step-title">הפעל את Claude Code 🚀</div>
-            <div class="step-content">פשוט הקלד:</div>
+            <div class="step-content">
+              עכשיו שאתה בתיקיית הפרויקט — פשוט הקלד:
+            </div>
             <div class="code-block">
-              <div class="code-header">
-                <div class="code-dots"><span></span><span></span><span></span></div>
-                <span class="code-lang">bash</span>
-              </div>
-              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">bash</span></div>
+              <button class="copy-btn" onclick="copyCode(this)">📋</button>
               <pre><code class="language-bash">claude</code></pre>
             </div>
-            <div class="step-content" style="margin-top:12px;">Claude יקרא את המבנה של הפרויקט ויהיה מוכן לקבל הוראות.</div>
+            <div class="step-content" style="margin-top:12px;">
+              Claude Code יסרוק את כל קבצי הפרויקט, יבין את המבנה, ויציג prompt שבו אתה יכול לכתוב בשפה טבעית מה אתה רוצה.<br><br>
+              <strong>מה כותבים?</strong> כל דבר! "תסביר לי מה יש פה", "תוסיף כפתור ירוק בעמוד הבית", "יש שגיאה בקובץ X — תתקן". Claude מבין עברית ואנגלית.
+            </div>
           </div>
         </div>
       </div>
@@ -1461,10 +1634,13 @@ code:not([class]) {
       <div class="callout callout-tip">
         <span class="callout-icon">⚡</span>
         <div class="callout-body">
-          <div class="callout-title">טיפ: alias שימושי</div>
-          <div class="callout-text">הוסף לקובץ <code>~/.bashrc</code> או <code>~/.zshrc</code>:<br>
-          <code>alias cc="claude --dangerously-skip-permissions"</code><br>
-          כך תוכל לכתוב <code>cc</code> בלי אישורים בכל פקודה (מתאים לסביבת פיתוח מקומית בטוחה).</div>
+          <div class="callout-title">קיצור דרך מתקדם: alias cc</div>
+          <div class="callout-text">
+            <strong>מה זה alias?</strong> קיצור לפקודה ארוכה. במקום לכתוב <code>claude --dangerously-skip-permissions</code> בכל פעם, יוצרים alias שמאפשר לכתוב רק <code>cc</code>.<br><br>
+            <strong>הדגל <code>--dangerously-skip-permissions</code></strong> אומר לClaude "אל תבקש אישור על כל פעולה קטנה" — מאיץ מאוד את העבודה בסביבת פיתוח פרטית.<br><br>
+            להוסיף לקובץ ההגדרות של הטרמינל (<code>~/.zshrc</code> ב-Mac, <code>~/.bashrc</code> ב-Linux):<br>
+            <code>alias cc="claude --dangerously-skip-permissions"</code>
+          </div>
         </div>
       </div>
     </section>
@@ -1481,8 +1657,8 @@ code:not([class]) {
       </div>
 
       <div class="card">
-        <p><strong>CLAUDE.md</strong> הוא קובץ טקסט שיוצרים בשורש הפרויקט. Claude קורא אותו <span class="hl">אוטומטית</span> בכל פעם שמתחילים session — זה מה שנותן לו את ההקשר הספציפי של הפרויקט שלך.</p>
-        <p>בלי CLAUDE.md, Claude מתנהג כמו freelancer שנכנס לפרויקט ביומו הראשון. עם CLAUDE.md טוב — הוא מתנהג כמו מפתח בכיר שכבר עובד אצלך חצי שנה.</p>
+        <p><strong>מה זה CLAUDE.md בכלל?</strong> קובץ טקסט רגיל (בפורמט Markdown) שיוצרים בתיקיית הפרויקט בשם <code>CLAUDE.md</code>. הוא לא קובץ קוד — זה קובץ הוראות בשפה אנושית. Claude קורא אותו <span class="hl">אוטומטית</span> בתחילת כל שיחה, לפני שמתחילים לעבוד.</p>
+        <p>דמיין שאתה שוכר מפתח חדש לפרויקט שלך. הוא לא יודע כלום על הפרויקט — הוא לא יודע שכתבת React ולא Angular, שמשתמשים ב-pnpm ולא ב-npm, שאסור לשנות קבצי ה-auth. כל זה צריך להסביר לו מחדש בכל פגישה. CLAUDE.md = מסמך הנחיות שהמפתח החדש (Claude) קורא לפני כל פגישה — ולא שוכח.</p>
       </div>
 
       <div class="callout callout-warn">
@@ -1560,7 +1736,8 @@ code:not([class]) {
       </div>
 
       <div class="card">
-        <p>המפתחים המנוסים ב-Claude Code פועלים לפי תהליך מובנה. דילוג על שלבים — בעיקר שלב התכנון — מוביל לתוצאות גרועות ולבזבוז זמן.</p>
+        <p><strong>למה צריך תהליך בכלל?</strong> כשעובדים עם Claude Code בלי תהליך — כמו שנוסעים בלי מפה. מגיעים לאי שם, לא בטוח לאן. Claude יתחיל לכתוב קוד מיד, יכתוב משהו שלא בדיוק רצית, תבקש לשנות, הוא ישנה משהו שישבור משהו אחר... מעגל מתסכל.</p>
+        <p>התהליך הנכון שמקצוענים משתמשים בו: <strong>קודם מחקר, אחר כך תכנון, אחר כך ביצוע</strong>. לא לדלג על שלבים. לא "תכתוב לי את כל המערכת" — אלא שלב אחרי שלב.</p>
       </div>
 
       <div class="steps">
@@ -1659,6 +1836,11 @@ code:not([class]) {
           <h2 class="section-title">פקודות מובנות חשובות</h2>
           <div class="section-divider"></div>
         </div>
+      </div>
+
+      <div class="card">
+        <p><strong>מה זה "פקודות מובנות"?</strong> בזמן שיחה עם Claude Code, יש פקודות מיוחדות שמתחילות עם <code>/</code> (סלש). הן לא הוראות ל-Claude — הן הוראות ל<em>כלי עצמו</em>. למשל <code>/clear</code> מוחקת את זיכרון השיחה, <code>/rewind</code> מחזירה למצב קודם.</p>
+        <p>בנוסף יש קיצורי מקלדת שעובדים בתוך Claude Code. המועילים ביותר: <kbd>Esc</kbd> לעצירת Claude באמצע, ו-<kbd>Shift</kbd>+<kbd>Tab</kbd> למצב תכנון בלבד.</p>
       </div>
 
       <div class="table-wrap">
@@ -1860,12 +2042,15 @@ code:not([class]) {
       </div>
 
       <div class="card">
-        <p><strong>Hooks</strong> מאפשרים להריץ פקודות shell אוטומטיות בתגובה לאירועים של Claude Code. מגדירים אותם בקובץ ה-settings (<code>.claude/settings.json</code>).</p>
-        <ul style="margin-top:12px;">
-          <li><strong>PreToolUse</strong> — לפני שClaude מריץ כלי (כתיבה, shell, וכו')</li>
-          <li><strong>PostToolUse</strong> — אחרי שClaude סיים להשתמש בכלי</li>
-          <li><strong>Stop</strong> — כשClaude מסיים תגובה</li>
-          <li><strong>SessionStart</strong> — בתחילת session חדש</li>
+        <p><strong>מה זה Hooks בכלל?</strong> דמיין שיש לך עוזר שעובד בשבילך — כל פעם שהוא שומר קובץ, אתה רוצה שיריץ בדיקה אוטומטית. כל פעם שהוא מסיים משימה, תישלח לך הודעה. Hooks = הוראות אוטומטיות שמופעלות כשקורה משהו.</p>
+        <p>מגדירים Hooks בקובץ <code>.claude/settings.json</code> בתיקיית הפרויקט. הם עוצמתיים מאוד — אבל לא הכרחיים בהתחלה.</p>
+
+        <p style="margin-top:16px;"><strong>4 סוגי אירועים:</strong></p>
+        <ul style="margin-top:8px;">
+          <li><strong>PreToolUse</strong> — לפני שClaude עושה משהו (למשל: לפני שכותב קובץ). שימושי ל: "אל תעשה X בלי לשאול אותי"</li>
+          <li><strong>PostToolUse</strong> — אחרי שClaude עשה משהו (למשל: אחרי שמירת קובץ). שימושי ל: "אחרי כל שמירה הרץ בדיקה"</li>
+          <li><strong>Stop</strong> — כשClaude מסיים תגובה. שימושי ל: "שלח לי התראה שהוא סיים"</li>
+          <li><strong>SessionStart</strong> — בתחילת שיחה חדשה. שימושי ל: "בתחילת כל שיחה טען את המידע העדכני"</li>
         </ul>
       </div>
 
@@ -1958,8 +2143,8 @@ code:not([class]) {
       </div>
 
       <div class="card">
-        <p><strong>Subagents</strong> הם מופעים של Claude שמופעלים מתוך Claude Code לביצוע משימות מקבילות. כל subagent פועל בcontext נפרד ויכול לטפל במשימה שונה בו-זמנית.</p>
-        <p><strong>מתי להשתמש בsubagents?</strong> כשיש משימות גדולות שניתן לפצל — לדוגמה, לבדוק 5 מודולים שונים במקביל.</p>
+        <p><strong>מה זה Subagent?</strong> דמיין שיש לך משימה גדולה: לבדוק אבטחה, לכתוב tests ולעצב UI — שלוש עבודות שונות. במקום שClaude יעשה אחת אחרי השנייה (איטי), אפשר לפתוח 3 חלונות טרמינל ולהפעיל Claude Code בכולם בו-זמנית. כל חלון = Subagent נפרד שעובד על המשימה שלו.</p>
+        <p><strong>הדמיה מעשית:</strong> פתח 3 חלונות טרמינל, כולם מכוונים לתיקיית הפרויקט, כולם מריצים <code>claude</code>. תן לכל אחד הוראות שונות. הם עובדים במקביל — כל אחד על קבצים שונים. בסוף ה-Git מאחד את כל השינויים.</p>
       </div>
 
       <div class="code-block">
@@ -1977,7 +2162,8 @@ code:not([class]) {
       </div>
 
       <div class="card" style="margin-top:20px;">
-        <p><strong>MCP (Model Context Protocol)</strong> הוא פרוטוקול שמאפשר לClaude לתקשר עם כלים חיצוניים — דטאבייסים, браузרים, APIs ועוד.</p>
+        <p><strong>מה זה MCP?</strong> קיצור של Model Context Protocol — פרוטוקול (שפה משותפת) שמאפשר לClaude "להתחבר" לכלים חיצוניים ולשלוט בהם. בלי MCP, Claude רק כותב קוד. עם MCP, Claude יכול לפתוח דפדפן אמיתי, לבצע שאילתות בבסיס הנתונים, לשלוח הודעות ב-Slack — הכל ישירות.</p>
+        <p>כל MCP Server = חיבור לכלי אחד. מגדירים אותם פעם אחת ב-settings.json ואז Claude יכול להשתמש בהם בכל שיחה.</p>
       </div>
 
       <div class="mcp-grid">
@@ -2099,22 +2285,22 @@ export CLAUDE_CODE_AUTO_COMPACT_WINDOW=8000
         <div class="mini-card">
           <div class="mc-icon">📁</div>
           <div class="mc-title">שמור תמיד לקבצים</div>
-          <div class="mc-text">כל החלטה חשובה, כל ממצא מחקר, כל תוכנית — לקובץ. לא רק בשיחה.</div>
+          <div class="mc-text">כל החלטה חשובה, כל ממצא מחקר, כל תוכנית — לקובץ בשם <code>plan.md</code> או <code>research.md</code>. לא רק בשיחה. בשיחה הבאה Claude לא זוכר — הקובץ כן.</div>
         </div>
         <div class="mini-card">
           <div class="mc-icon">🔄</div>
           <div class="mc-title">/compact בזמן</div>
-          <div class="mc-text">הרץ /compact לפני שהcontext מתמלא לגמרי — לא רק כשיש בעיה.</div>
+          <div class="mc-text">הרץ <code>/compact</code> לפני שהContext מתמלא לגמרי. Claude יסכם את ההיסטוריה לתמצית קצרה וימשיך לעבוד — לא מאפס.</div>
         </div>
         <div class="mini-card">
           <div class="mc-icon">🏷️</div>
           <div class="mc-title">שמות ל-sessions</div>
-          <div class="mc-text">השתמש ב-/rename כדי לתת שמות משמעותיים — "feature-auth", "fix-perf" וכו'.</div>
+          <div class="mc-text">השתמש ב-<code>/rename</code> כדי לתת שמות משמעותיים — "feature-login", "fix-payment-bug". ככה קל למצוא שיחה ישנה עם <code>/resume</code>.</div>
         </div>
         <div class="mini-card">
           <div class="mc-icon">🌿</div>
           <div class="mc-title">Branch לניסויים</div>
-          <div class="mc-text">לפני ניסוי גישה לא ודאית — /branch כדי לשמור session בטוח לחזרה.</div>
+          <div class="mc-text"><code>/branch</code> יוצר "עותק" של השיחה הנוכחית. ניסוי גישה חדשה? תפצל branch — אם לא עובד, תחזור לשיחה המקורית.</div>
         </div>
       </div>
     </section>
