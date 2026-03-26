@@ -8,51 +8,61 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
 <style>
 :root {
-  --primary: #1e3a5f;
-  --primary-light: #2a5298;
-  --accent: #f0a500;
-  --accent-light: #ffc107;
-  --bg: #f0f4f8;
+  /* Autovision Brand */
+  --primary: #1a2744;
+  --primary-light: #2f4a8a;
+  --accent: #0081f2;
+  --accent-light: #3fa2ff;
+  /* MANUS warm neutrals */
+  --bg: #f8f8f7;
   --bg-card: #ffffff;
-  --bg-sidebar: #1e3a5f;
-  --text: #1a202c;
-  --text-muted: #4a5568;
-  --text-sidebar: #e2e8f0;
-  --border: #e2e8f0;
-  --shadow: 0 2px 12px rgba(0,0,0,0.08);
-  --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
-  --code-bg: #1e293b;
-  --callout-tip: #e8f5e9;
-  --callout-tip-border: #4caf50;
-  --callout-warn: #fff8e1;
-  --callout-warn-border: #ff9800;
-  --callout-info: #e3f2fd;
-  --callout-info-border: #2196f3;
-  --radius: 12px;
-  --sidebar-width: 280px;
+  --bg-canvas: #f0f0ef;
+  --bg-sidebar: #1a2744;
+  /* Warm text (MANUS style) */
+  --text: #34322d;
+  --text-muted: #6b6b68;
+  --text-sidebar: #c4cee0;
+  /* Ultra-subtle borders (MANUS style) */
+  --border: rgba(0,0,0,0.065);
+  --border-strong: rgba(0,0,0,0.13);
+  /* MANUS shadows */
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 12px 36px rgba(0,0,0,0.07);
+  --code-bg: #0d1117;
+  /* Callouts */
+  --callout-tip: #f0faf4;
+  --callout-tip-border: #34c759;
+  --callout-warn: #fffbf0;
+  --callout-warn-border: #e8a200;
+  --callout-info: #f0f7ff;
+  --callout-info-border: #0081f2;
+  --radius: 10px;
+  --sidebar-width: 272px;
 }
 
 [data-theme="dark"] {
-  --primary: #2a5298;
-  --primary-light: #3d6fd4;
-  --accent: #f0a500;
-  --accent-light: #ffd54f;
-  --bg: #0f172a;
-  --bg-card: #1e293b;
-  --bg-sidebar: #0a1628;
-  --text: #e2e8f0;
-  --text-muted: #94a3b8;
-  --text-sidebar: #cbd5e1;
-  --border: #334155;
-  --shadow: 0 2px 12px rgba(0,0,0,0.3);
-  --shadow-hover: 0 8px 30px rgba(0,0,0,0.5);
-  --code-bg: #0f172a;
-  --callout-tip: #0d2818;
-  --callout-tip-border: #4caf50;
+  --primary: #3557a7;
+  --primary-light: #4a72d4;
+  --accent: #1a93fe;
+  --accent-light: #5ab0ff;
+  --bg: #161618;
+  --bg-card: #272728;
+  --bg-canvas: #1e1e20;
+  --bg-sidebar: #0f1520;
+  --text: #dadada;
+  --text-muted: #9a9a97;
+  --text-sidebar: #b0bdd4;
+  --border: rgba(255,255,255,0.075);
+  --border-strong: rgba(255,255,255,0.13);
+  --shadow: 0 1px 4px rgba(0,0,0,0.3), 0 4px 14px rgba(0,0,0,0.2);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.45), 0 12px 36px rgba(0,0,0,0.3);
+  --code-bg: #0d1117;
+  --callout-tip: #0c2016;
+  --callout-tip-border: #34c759;
   --callout-warn: #1a1200;
-  --callout-warn-border: #ff9800;
-  --callout-info: #0a1a2e;
-  --callout-info-border: #2196f3;
+  --callout-warn-border: #e8a200;
+  --callout-info: #081828;
+  --callout-info-border: #1a93fe;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -100,15 +110,16 @@ body {
 }
 
 .sidebar-logo .logo-icon {
-  width: 36px;
+  width: 44px;
   height: 36px;
-  background: var(--accent);
+  background: rgba(255,255,255,0.06);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
   flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 4px 6px;
 }
 
 .sidebar-logo span {
@@ -151,14 +162,14 @@ body {
 }
 
 .nav-item:hover {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.07);
   color: #fff;
-  border-right-color: rgba(240,165,0,0.5);
+  border-right-color: rgba(0,129,242,0.5);
 }
 
 .nav-item.active {
-  background: rgba(240,165,0,0.15);
-  color: var(--accent);
+  background: rgba(0,129,242,0.14);
+  color: #5ab8ff;
   border-right-color: var(--accent);
   font-weight: 600;
 }
@@ -184,7 +195,7 @@ body {
 
 .nav-item.active .nav-num {
   background: var(--accent);
-  color: #000;
+  color: #fff;
 }
 
 /* Progress bar */
@@ -211,7 +222,7 @@ body {
 
 .progress-bar-fill {
   height: 100%;
-  background: var(--accent);
+  background: linear-gradient(to left, var(--accent), #5ab8ff);
   border-radius: 2px;
   transition: width 0.3s ease;
   width: 0%;
@@ -223,16 +234,22 @@ body {
   top: 0;
   right: var(--sidebar-width);
   left: 0;
-  height: 60px;
-  background: var(--bg-card);
+  height: 58px;
+  background: rgba(248,248,247,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
   z-index: 90;
-  box-shadow: var(--shadow);
+  box-shadow: 0 1px 0 var(--border);
   transition: background 0.3s, border-color 0.3s;
+}
+
+[data-theme="dark"] .topbar {
+  background: rgba(22,22,24,0.85);
 }
 
 .topbar-title {
@@ -277,7 +294,7 @@ body {
 }
 
 [data-theme="dark"] .theme-toggle {
-  background: var(--accent);
+  background: var(--primary-light);
 }
 
 [data-theme="dark"] .theme-toggle::after {
@@ -338,14 +355,15 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(240,165,0,0.1);
+  background: rgba(0,129,242,0.07);
   color: var(--accent);
-  border: 1px solid rgba(240,165,0,0.3);
+  border: 1px solid rgba(0,129,242,0.2);
   border-radius: 20px;
   padding: 6px 16px;
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 20px;
+  letter-spacing: 0.2px;
 }
 
 .hero h1 {
@@ -458,14 +476,15 @@ body {
   background: var(--bg-card);
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  padding: 28px;
+  padding: 26px 28px;
   box-shadow: var(--shadow);
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: box-shadow 0.25s, border-color 0.25s;
   margin-bottom: 20px;
 }
 
 .card:hover {
   box-shadow: var(--shadow-hover);
+  border-color: var(--border-strong);
 }
 
 .card p, .card li {
@@ -485,7 +504,7 @@ body {
 .card li::marker { color: var(--accent); }
 
 .card strong { color: var(--primary); font-weight: 700; }
-[data-theme="dark"] .card strong { color: var(--accent-light); }
+[data-theme="dark"] .card strong { color: #e8e8e8; }
 
 /* ===== CALLOUTS ===== */
 .callout {
@@ -562,33 +581,33 @@ body {
 }
 
 .copy-btn {
-  position: absolute;
-  top: 44px;
-  left: 12px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.7);
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 12px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.13);
+  color: rgba(255,255,255,0.5);
+  border-radius: 5px;
+  padding: 3px 9px;
+  font-size: 11px;
   cursor: pointer;
   font-family: 'Heebo', sans-serif;
-  transition: all 0.2s;
+  transition: all 0.15s;
   display: flex;
   align-items: center;
   gap: 4px;
-  z-index: 10;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-right: auto;
 }
 
 .copy-btn:hover {
-  background: rgba(255,255,255,0.2);
-  color: #fff;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(255,255,255,0.25);
 }
 
 .copy-btn.copied {
-  background: rgba(76,175,80,0.3);
-  color: #4caf50;
-  border-color: #4caf50;
+  background: rgba(52,199,89,0.2);
+  color: #34c759;
+  border-color: rgba(52,199,89,0.4);
 }
 
 /* ===== TABLE ===== */
@@ -962,8 +981,8 @@ kbd {
 
 /* ===== INLINE CODE ===== */
 code:not([class]) {
-  background: rgba(30,58,95,0.08);
-  color: var(--primary);
+  background: rgba(0,129,242,0.07);
+  color: #1a6ab0;
   border-radius: 4px;
   padding: 2px 6px;
   font-family: 'Courier New', monospace;
@@ -972,7 +991,7 @@ code:not([class]) {
 }
 
 [data-theme="dark"] code:not([class]) {
-  background: rgba(240,165,0,0.1);
+  background: rgba(26,147,254,0.1);
   color: var(--accent);
 }
 
@@ -1048,13 +1067,13 @@ code:not([class]) {
 .badge {
   display: inline-flex;
   align-items: center;
-  background: rgba(240,165,0,0.12);
+  background: rgba(0,129,242,0.08);
   color: var(--accent);
   border-radius: 5px;
   padding: 2px 8px;
   font-size: 12px;
   font-weight: 700;
-  border: 1px solid rgba(240,165,0,0.3);
+  border: 1px solid rgba(0,129,242,0.2);
 }
 
 .badge-green {
@@ -1117,10 +1136,28 @@ code:not([class]) {
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div class="sidebar-logo">
-      <div class="logo-icon">🤖</div>
-      <span>Claude Code<br>מדריך עברי</span>
+      <div class="logo-icon">
+        <svg width="36" height="26" viewBox="0 0 80 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 28 C22 6 58 6 76 28 C58 50 22 50 4 28Z" stroke="white" stroke-width="5" fill="none" stroke-linejoin="round"/>
+          <circle cx="40" cy="28" r="11.5" stroke="white" stroke-width="4.5" fill="none"/>
+          <rect x="38" y="13.5" width="4" height="4.5" rx="1" fill="white"/>
+          <rect x="38" y="38" width="4" height="4.5" rx="1" fill="white"/>
+          <rect x="24.5" y="26" width="4.5" height="4" rx="1" fill="white"/>
+          <rect x="51" y="26" width="4.5" height="4" rx="1" fill="white"/>
+          <g transform="rotate(45 40 28)">
+            <rect x="38" y="13.5" width="4" height="4.5" rx="1" fill="white"/>
+            <rect x="38" y="38" width="4" height="4.5" rx="1" fill="white"/>
+            <rect x="24.5" y="26" width="4.5" height="4" rx="1" fill="white"/>
+            <rect x="51" y="26" width="4.5" height="4" rx="1" fill="white"/>
+          </g>
+          <circle cx="40" cy="28" r="4" fill="white"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:800;color:#fff;letter-spacing:0.5px;">AUTOVISION</div>
+        <div style="font-size:10px;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:1px;text-transform:uppercase;">Claude Code Guide</div>
+      </div>
     </div>
-    <div class="sidebar-subtitle">המדריך המקיף לעבודה נכונה</div>
   </div>
 
   <div class="sidebar-nav" id="sidebarNav">
@@ -1227,8 +1264,23 @@ code:not([class]) {
   <button class="hamburger" onclick="toggleSidebar()" aria-label="תפריט">
     <span></span><span></span><span></span>
   </button>
-  <div class="topbar-title">
-    <span>Claude Code</span> — המדריך המקיף בעברית
+  <div class="topbar-title" style="display:flex;align-items:center;gap:10px;">
+    <svg width="28" height="20" viewBox="0 0 80 56" fill="none" style="opacity:0.7;">
+      <path d="M4 28 C22 6 58 6 76 28 C58 50 22 50 4 28Z" stroke="#1a2744" stroke-width="5" fill="none" stroke-linejoin="round"/>
+      <circle cx="40" cy="28" r="11.5" stroke="#1a2744" stroke-width="4.5" fill="none"/>
+      <rect x="38" y="13.5" width="4" height="4.5" rx="1" fill="#1a2744"/>
+      <rect x="38" y="38" width="4" height="4.5" rx="1" fill="#1a2744"/>
+      <rect x="24.5" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+      <rect x="51" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+      <g transform="rotate(45 40 28)">
+        <rect x="38" y="13.5" width="4" height="4.5" rx="1" fill="#1a2744"/>
+        <rect x="38" y="38" width="4" height="4.5" rx="1" fill="#1a2744"/>
+        <rect x="24.5" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+        <rect x="51" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+      </g>
+      <circle cx="40" cy="28" r="4" fill="#1a2744"/>
+    </svg>
+    <span>AUTOVISION</span> — מדריך Claude Code
   </div>
   <div class="topbar-actions">
     <label class="theme-toggle-label" for="themeToggle">
@@ -1244,9 +1296,26 @@ code:not([class]) {
 
     <!-- Hero -->
     <div class="hero">
-      <div class="hero-badge">✨ מדריך מלא ועדכני · 2025</div>
-      <h1>למד לעבוד עם<br><span>Claude Code</span> כמו מקצוען</h1>
-      <p>כל מה שצריך לדעת כדי לעבוד נכון עם Claude Code — מהתקנה ועד workflows מתקדמים, בעברית</p>
+      <div style="display:flex;justify-content:center;margin-bottom:20px;">
+        <svg width="64" height="46" viewBox="0 0 80 56" fill="none">
+          <path d="M4 28 C22 6 58 6 76 28 C58 50 22 50 4 28Z" stroke="#1a2744" stroke-width="4.5" fill="none" stroke-linejoin="round"/>
+          <circle cx="40" cy="28" r="11.5" stroke="#1a2744" stroke-width="4" fill="none"/>
+          <rect x="38" y="13.5" width="4" height="4.5" rx="1" fill="#1a2744"/>
+          <rect x="38" y="38" width="4" height="4.5" rx="1" fill="#1a2744"/>
+          <rect x="24.5" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+          <rect x="51" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+          <g transform="rotate(45 40 28)">
+            <rect x="38" y="13.5" width="4" height="4.5" rx="1" fill="#1a2744"/>
+            <rect x="38" y="38" width="4" height="4.5" rx="1" fill="#1a2744"/>
+            <rect x="24.5" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+            <rect x="51" y="26" width="4.5" height="4" rx="1" fill="#1a2744"/>
+          </g>
+          <circle cx="40" cy="28" r="4" fill="#1a2744"/>
+        </svg>
+      </div>
+      <div class="hero-badge">✦ AUTOVISION · מדריך Claude Code · 2025</div>
+      <h1>למד לבנות מערכות עם<br><span>Claude Code</span></h1>
+      <p>המדריך המקיף בעברית — מהתקנה ועד parallel agents, בסגנון שעובד בשטח</p>
       <div class="hero-stats">
         <div class="stat-pill"><span class="stat-icon">📚</span> 17 פרקים</div>
         <div class="stat-pill"><span class="stat-icon">💡</span> 30+ טיפים</div>
@@ -2860,14 +2929,23 @@ function closeSidebarMobile() {
   if (window.innerWidth <= 900) closeSidebar();
 }
 
+// ===== Move copy buttons into code-header =====
+document.querySelectorAll('.code-block').forEach(block => {
+  const btn = block.querySelector('.copy-btn');
+  const header = block.querySelector('.code-header');
+  if (btn && header && btn.parentElement !== header) {
+    header.appendChild(btn);
+  }
+});
+
 // ===== Copy Code =====
 function copyCode(btn) {
-  const pre = btn.nextElementSibling;
-  const code = pre.querySelector('code');
-  const text = code ? code.textContent : pre.textContent;
+  const block = btn.closest('.code-block');
+  const code = block ? block.querySelector('code') : null;
+  const text = code ? code.textContent : '';
   navigator.clipboard.writeText(text.trim()).then(() => {
     const orig = btn.innerHTML;
-    btn.innerHTML = '✅ הועתק!';
+    btn.innerHTML = '✅';
     btn.classList.add('copied');
     setTimeout(() => {
       btn.innerHTML = orig;
