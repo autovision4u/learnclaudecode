@@ -1,0 +1,2953 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך Claude Code — המדריך המקיף בעברית</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #1e3a5f;
+  --primary-light: #2a5298;
+  --accent: #f0a500;
+  --accent-light: #ffc107;
+  --bg: #f0f4f8;
+  --bg-card: #ffffff;
+  --bg-sidebar: #1e3a5f;
+  --text: #1a202c;
+  --text-muted: #4a5568;
+  --text-sidebar: #e2e8f0;
+  --border: #e2e8f0;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+  --code-bg: #1e293b;
+  --callout-tip: #e8f5e9;
+  --callout-tip-border: #4caf50;
+  --callout-warn: #fff8e1;
+  --callout-warn-border: #ff9800;
+  --callout-info: #e3f2fd;
+  --callout-info-border: #2196f3;
+  --radius: 12px;
+  --sidebar-width: 280px;
+}
+
+[data-theme="dark"] {
+  --primary: #2a5298;
+  --primary-light: #3d6fd4;
+  --accent: #f0a500;
+  --accent-light: #ffd54f;
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-sidebar: #0a1628;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-sidebar: #cbd5e1;
+  --border: #334155;
+  --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  --shadow-hover: 0 8px 30px rgba(0,0,0,0.5);
+  --code-bg: #0f172a;
+  --callout-tip: #0d2818;
+  --callout-tip-border: #4caf50;
+  --callout-warn: #1a1200;
+  --callout-warn-border: #ff9800;
+  --callout-info: #0a1a2e;
+  --callout-info-border: #2196f3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  text-align: right;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  color: var(--text-sidebar);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.sidebar-logo .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.sidebar-logo span {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.sidebar-subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  padding-right: 46px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-right: 3px solid transparent;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border-right-color: rgba(240,165,0,0.5);
+}
+
+.nav-item.active {
+  background: rgba(240,165,0,0.15);
+  color: var(--accent);
+  border-right-color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-item .nav-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.nav-item .nav-num {
+  font-size: 10px;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  border-radius: 4px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+.nav-item.active .nav-num {
+  background: var(--accent);
+  color: #000;
+}
+
+/* Progress bar */
+.sidebar-progress {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+.progress-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar-track {
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+/* ===== TOP BAR ===== */
+.topbar {
+  position: fixed;
+  top: 0;
+  right: var(--sidebar-width);
+  left: 0;
+  height: 60px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 90;
+  box-shadow: var(--shadow);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.topbar-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.topbar-title span {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle {
+  width: 44px;
+  height: 24px;
+  background: var(--border);
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 18px;
+  height: 18px;
+  background: var(--bg-card);
+  border-radius: 50%;
+  transition: all 0.3s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: var(--accent);
+}
+
+[data-theme="dark"] .theme-toggle::after {
+  right: auto;
+  left: 3px;
+}
+
+.theme-toggle-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 6px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: all 0.3s;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main {
+  margin-right: var(--sidebar-width);
+  padding-top: 60px;
+  min-height: 100vh;
+}
+
+.content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center;
+  padding: 56px 0 48px;
+  animation: fadeInUp 0.6s ease both;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(240,165,0,0.1);
+  color: var(--accent);
+  border: 1px solid rgba(240,165,0,0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+[data-theme="dark"] .hero h1 { color: #e2e8f0; }
+
+.hero h1 span {
+  color: var(--accent);
+  position: relative;
+}
+
+.hero p {
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.stat-pill .stat-icon { font-size: 16px; }
+
+/* ===== SECTIONS ===== */
+.section {
+  margin-bottom: 64px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.section-icon {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(30,58,95,0.3);
+}
+
+.section-title-block { flex: 1; }
+
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.section-title {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.section-divider {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(to left, var(--accent), var(--primary-light));
+  border-radius: 2px;
+  margin-top: 10px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.card p, .card li {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.card p + p { margin-top: 14px; }
+
+.card ul, .card ol {
+  padding-right: 20px;
+  margin-top: 12px;
+}
+
+.card li { margin-bottom: 8px; }
+.card li::marker { color: var(--accent); }
+
+.card strong { color: var(--primary); font-weight: 700; }
+[data-theme="dark"] .card strong { color: var(--accent-light); }
+
+/* ===== CALLOUTS ===== */
+.callout {
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  border-right: 4px solid;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.callout-tip { background: var(--callout-tip); border-right-color: var(--callout-tip-border); }
+.callout-warn { background: var(--callout-warn); border-right-color: var(--callout-warn-border); }
+.callout-info { background: var(--callout-info); border-right-color: var(--callout-info-border); }
+
+.callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+.callout-body { flex: 1; }
+.callout-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+.callout-text { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+/* ===== CODE BLOCKS ===== */
+.code-block {
+  position: relative;
+  margin: 20px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.code-header {
+  background: #0d1b2a;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.code-lang {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.code-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.code-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.code-dots span:nth-child(1) { background: #ff5f57; }
+.code-dots span:nth-child(2) { background: #febc2e; }
+.code-dots span:nth-child(3) { background: #28c840; }
+
+.code-block pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  direction: ltr;
+  text-align: left;
+}
+
+.code-block pre code {
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 44px;
+  left: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Heebo', sans-serif;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 10;
+}
+
+.copy-btn:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.copy-btn.copied {
+  background: rgba(76,175,80,0.3);
+  color: #4caf50;
+  border-color: #4caf50;
+}
+
+/* ===== TABLE ===== */
+.table-wrap {
+  overflow-x: auto;
+  margin: 20px 0;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 500px;
+}
+
+thead {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+}
+
+thead th {
+  padding: 14px 18px;
+  font-weight: 700;
+  text-align: right;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+
+tbody tr:nth-child(even) {
+  background: rgba(0,0,0,0.02);
+}
+
+[data-theme="dark"] tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.03);
+}
+
+tbody tr:hover {
+  background: rgba(240,165,0,0.06);
+}
+
+tbody td {
+  padding: 12px 18px;
+  color: var(--text);
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+tbody td:first-child {
+  font-weight: 700;
+  color: var(--primary);
+  direction: ltr;
+  text-align: left;
+}
+
+[data-theme="dark"] tbody td:first-child { color: var(--accent-light); }
+
+/* ===== STEPS ===== */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  right: 19px;
+  top: 44px;
+  bottom: -12px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary-light), transparent);
+}
+
+.step-num {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  box-shadow: 0 3px 10px rgba(30,58,95,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.step-body {
+  flex: 1;
+  padding-bottom: 28px;
+}
+
+.step-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #000;
+  border-radius: 4px;
+  padding: 2px 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.step-content {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.step-content strong { color: var(--text); font-weight: 600; }
+
+/* ===== PROMPT CARDS ===== */
+.prompt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.prompt-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.prompt-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.prompt-card-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prompt-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt-card-title .icon { font-size: 18px; }
+
+.prompt-copy-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Heebo', sans-serif;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.prompt-copy-btn:hover { background: rgba(255,255,255,0.25); }
+.prompt-copy-btn.copied { background: rgba(76,175,80,0.4); border-color: #4caf50; }
+
+.prompt-card-body {
+  padding: 18px;
+}
+
+.prompt-text {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  direction: ltr;
+  text-align: left;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ===== GRID CARDS ===== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.mini-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.mini-card .mc-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.mini-card .mc-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.mini-card .mc-text {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ===== COMPARISON TABLE ===== */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.compare-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.compare-header {
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compare-header.blue { background: var(--primary); }
+.compare-header.orange { background: #e67e22; }
+
+.compare-body { padding: 16px 18px; }
+.compare-body li {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  padding-right: 14px;
+  position: relative;
+  line-height: 1.6;
+}
+.compare-body li::before {
+  content: '✓';
+  position: absolute;
+  right: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ===== ERRORS ===== */
+.error-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.error-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.error-x {
+  width: 28px;
+  height: 28px;
+  background: rgba(239,68,68,0.1);
+  color: #ef4444;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.error-content { flex: 1; }
+.error-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.error-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; }
+.error-fix { font-size: 13px; color: #4caf50; margin-top: 6px; font-weight: 600; }
+
+/* ===== MCP SERVER CARDS ===== */
+.mcp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.mcp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.mcp-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+.mcp-icon { font-size: 32px; margin-bottom: 10px; }
+.mcp-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.mcp-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
+
+/* ===== KEYBOARD SHORTCUT ===== */
+kbd {
+  display: inline-block;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-bottom-width: 3px;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+[data-theme="dark"] kbd { color: var(--accent); }
+
+/* ===== INLINE CODE ===== */
+code:not([class]) {
+  background: rgba(30,58,95,0.08);
+  color: var(--primary);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+[data-theme="dark"] code:not([class]) {
+  background: rgba(240,165,0,0.1);
+  color: var(--accent);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 40px;
+}
+
+.footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+/* ===== SIDEBAR OVERLAY ===== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  :root { --sidebar-width: 0px; }
+
+  .sidebar {
+    transform: translateX(100%);
+    width: 280px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    width: 280px;
+  }
+
+  .sidebar-overlay.open { display: block; }
+
+  .main { margin-right: 0; }
+
+  .topbar { right: 0; }
+
+  .hamburger { display: flex; }
+
+  .content { padding: 32px 20px 60px; }
+
+  .compare-grid { grid-template-columns: 1fr; }
+
+  .prompt-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .hero-stats { gap: 10px; }
+  .stat-pill { font-size: 12px; padding: 6px 12px; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .mcp-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== BADGE INLINE ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(240,165,0,0.12);
+  color: var(--accent);
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(240,165,0,0.3);
+}
+
+.badge-green {
+  background: rgba(76,175,80,0.12);
+  color: #4caf50;
+  border-color: rgba(76,175,80,0.3);
+}
+
+.badge-red {
+  background: rgba(239,68,68,0.12);
+  color: #ef4444;
+  border-color: rgba(239,68,68,0.3);
+}
+
+/* ===== HIGHLIGHT TEXT ===== */
+.hl { color: var(--accent); font-weight: 700; }
+.hl-blue { color: var(--primary-light); font-weight: 700; }
+[data-theme="dark"] .hl-blue { color: #60a5fa; }
+
+/* Back to top */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 80;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: var(--primary-light);
+  transform: translateY(-3px);
+}
+</style>
+</head>
+<body data-theme="light">
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🤖</div>
+      <span>Claude Code<br>מדריך עברי</span>
+    </div>
+    <div class="sidebar-subtitle">המדריך המקיף לעבודה נכונה</div>
+  </div>
+
+  <div class="sidebar-nav" id="sidebarNav">
+    <a class="nav-item active" href="#s1" onclick="closeSidebarMobile()">
+      <span class="nav-num">1</span>
+      <span class="nav-icon">💡</span>
+      <span>מה זה Claude Code</span>
+    </a>
+    <a class="nav-item" href="#s2" onclick="closeSidebarMobile()">
+      <span class="nav-num">2</span>
+      <span class="nav-icon">⚙️</span>
+      <span>התקנה והגדרה</span>
+    </a>
+    <a class="nav-item" href="#s3" onclick="closeSidebarMobile()">
+      <span class="nav-num">3</span>
+      <span class="nav-icon">📄</span>
+      <span>קובץ CLAUDE.md</span>
+    </a>
+    <a class="nav-item" href="#s4" onclick="closeSidebarMobile()">
+      <span class="nav-num">4</span>
+      <span class="nav-icon">🔄</span>
+      <span>תהליך העבודה הנכון</span>
+    </a>
+    <a class="nav-item" href="#s5" onclick="closeSidebarMobile()">
+      <span class="nav-num">5</span>
+      <span class="nav-icon">⌨️</span>
+      <span>פקודות מובנות</span>
+    </a>
+    <a class="nav-item" href="#s6" onclick="closeSidebarMobile()">
+      <span class="nav-num">6</span>
+      <span class="nav-icon">⚡</span>
+      <span>Custom Slash Commands</span>
+    </a>
+    <a class="nav-item" href="#s7" onclick="closeSidebarMobile()">
+      <span class="nav-num">7</span>
+      <span class="nav-icon">🪝</span>
+      <span>Hooks — אוטומציה</span>
+    </a>
+    <a class="nav-item" href="#s8" onclick="closeSidebarMobile()">
+      <span class="nav-num">8</span>
+      <span class="nav-icon">🌐</span>
+      <span>Subagents ו-MCP</span>
+    </a>
+    <a class="nav-item" href="#s9" onclick="closeSidebarMobile()">
+      <span class="nav-num">9</span>
+      <span class="nav-icon">🧠</span>
+      <span>ניהול Context וזיכרון</span>
+    </a>
+    <a class="nav-item" href="#s10" onclick="closeSidebarMobile()">
+      <span class="nav-num">10</span>
+      <span class="nav-icon">🚀</span>
+      <span>טיפים מתקדמים</span>
+    </a>
+    <a class="nav-item" href="#s11" onclick="closeSidebarMobile()">
+      <span class="nav-num">11</span>
+      <span class="nav-icon">⚠️</span>
+      <span>שגיאות נפוצות</span>
+    </a>
+    <a class="nav-item" href="#s12" onclick="closeSidebarMobile()">
+      <span class="nav-num">12</span>
+      <span class="nav-icon">💬</span>
+      <span>Prompts שעובדים</span>
+    </a>
+    <a class="nav-item" href="#s13" onclick="closeSidebarMobile()">
+      <span class="nav-num">13</span>
+      <span class="nav-icon">🗺️</span>
+      <span>התחלת פרויקט נכון</span>
+    </a>
+    <a class="nav-item" href="#s14" onclick="closeSidebarMobile()">
+      <span class="nav-num">14</span>
+      <span class="nav-icon">🌿</span>
+      <span>עבודה עם Git</span>
+    </a>
+    <a class="nav-item" href="#s15" onclick="closeSidebarMobile()">
+      <span class="nav-num">15</span>
+      <span class="nav-icon">🏗️</span>
+      <span>מבנה פרויקט</span>
+    </a>
+    <a class="nav-item" href="#s16" onclick="closeSidebarMobile()">
+      <span class="nav-num">16</span>
+      <span class="nav-icon">🐘</span>
+      <span>Supabase — מדריך מהיר</span>
+    </a>
+    <a class="nav-item" href="#s17" onclick="closeSidebarMobile()">
+      <span class="nav-num">17</span>
+      <span class="nav-icon">⚡</span>
+      <span>Parallel Agents</span>
+    </a>
+  </div>
+
+  <div class="sidebar-progress">
+    <div class="progress-label">
+      <span>התקדמות בדף</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Top Bar -->
+<header class="topbar">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="topbar-title">
+    <span>Claude Code</span> — המדריך המקיף בעברית
+  </div>
+  <div class="topbar-actions">
+    <label class="theme-toggle-label" for="themeToggle">
+      <span id="themeIcon">☀️</span>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="עבור בין מצב בהיר לכהה"></button>
+    </label>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="main">
+  <div class="content">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">✨ מדריך מלא ועדכני · 2025</div>
+      <h1>למד לעבוד עם<br><span>Claude Code</span> כמו מקצוען</h1>
+      <p>כל מה שצריך לדעת כדי לעבוד נכון עם Claude Code — מהתקנה ועד workflows מתקדמים, בעברית</p>
+      <div class="hero-stats">
+        <div class="stat-pill"><span class="stat-icon">📚</span> 17 פרקים</div>
+        <div class="stat-pill"><span class="stat-icon">💡</span> 30+ טיפים</div>
+        <div class="stat-pill"><span class="stat-icon">💬</span> 6 Prompts מוכנים</div>
+        <div class="stat-pill"><span class="stat-icon">⚡</span> דוגמאות קוד אמיתיות</div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 1 ===== -->
+    <section class="section" id="s1">
+      <div class="section-header">
+        <div class="section-icon">💡</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 1</div>
+          <h2 class="section-title">מה זה Claude Code?</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>Claude Code</strong> הוא <span class="hl">CLI agent</span> — כלי שורת פקודה שמריץ Claude ישירות על הסביבה המקומית שלך. הוא יכול לקרוא קבצים, לכתוב קוד, להריץ פקודות, ולנהל את הפרויקט שלך מקצה לקצה — בלי שתצטרך להעתיק-הדביק שום דבר.</p>
+        <p>אתה פשוט פותח טרמינל בתיקיית הפרויקט, מקליד <code>claude</code>, ומתחיל לתת הוראות בשפה טבעית.</p>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <div class="compare-header blue">🌐 claude.ai (הצ'אט)</div>
+          <div class="compare-body">
+            <ul>
+              <li>עובד בדפדפן</li>
+              <li>מושלם לשאלות ורעיונות</li>
+              <li>לא ניגש לקבצים שלך</li>
+              <li>צריך להדביק קוד ידנית</li>
+              <li>אין גישה לטרמינל</li>
+            </ul>
+          </div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-header orange">⚡ Claude Code (CLI)</div>
+          <div class="compare-body">
+            <ul>
+              <li>עובד מהטרמינל</li>
+              <li>ניגש לכל קבצי הפרויקט</li>
+              <li>מריץ פקודות shell</li>
+              <li>מבצע שינויים ישירות</li>
+              <li>מנהל git, tests, deploys</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">מתי להשתמש ב-Claude Code?</div>
+          <div class="callout-text">כשאתה עובד על פרויקט קוד אמיתי — לא לשאלות תיאורטיות. Claude Code מתאים לפיתוח, debugging, refactoring, כתיבת tests, ואוטומציה של workflows.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2 ===== -->
+    <section class="section" id="s2">
+      <div class="section-header">
+        <div class="section-icon">⚙️</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 2</div>
+          <h2 class="section-title">התקנה והגדרה</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>דרישות מוקדמות:</strong> Node.js גרסה 18 ומעלה. בדוק עם <code>node --version</code>.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">התקן את Claude Code גלובלית <span class="step-badge">npm</span></div>
+            <div class="step-content">הרץ את הפקודה הבאה בטרמינל:</div>
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots"><span></span><span></span><span></span></div>
+                <span class="code-lang">bash</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <pre><code class="language-bash">npm install -g @anthropic-ai/claude-code</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">התחבר לחשבון Anthropic <span class="step-badge">auth</span></div>
+            <div class="step-content">הפקודה תפתח דפדפן לאימות:</div>
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots"><span></span><span></span><span></span></div>
+                <span class="code-lang">bash</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <pre><code class="language-bash">claude auth</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">פתח את הפרויקט שלך <span class="step-badge">cd</span></div>
+            <div class="step-content">נווט לתיקיית הפרויקט שלך:</div>
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots"><span></span><span></span><span></span></div>
+                <span class="code-lang">bash</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <pre><code class="language-bash">cd /path/to/your/project</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">הפעל את Claude Code 🚀</div>
+            <div class="step-content">פשוט הקלד:</div>
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots"><span></span><span></span><span></span></div>
+                <span class="code-lang">bash</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <pre><code class="language-bash">claude</code></pre>
+            </div>
+            <div class="step-content" style="margin-top:12px;">Claude יקרא את המבנה של הפרויקט ויהיה מוכן לקבל הוראות.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">⚡</span>
+        <div class="callout-body">
+          <div class="callout-title">טיפ: alias שימושי</div>
+          <div class="callout-text">הוסף לקובץ <code>~/.bashrc</code> או <code>~/.zshrc</code>:<br>
+          <code>alias cc="claude --dangerously-skip-permissions"</code><br>
+          כך תוכל לכתוב <code>cc</code> בלי אישורים בכל פקודה (מתאים לסביבת פיתוח מקומית בטוחה).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3 ===== -->
+    <section class="section" id="s3">
+      <div class="section-header">
+        <div class="section-icon">📄</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 3</div>
+          <h2 class="section-title">קובץ CLAUDE.md — הכלי הכי חשוב</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>CLAUDE.md</strong> הוא קובץ טקסט שיוצרים בשורש הפרויקט. Claude קורא אותו <span class="hl">אוטומטית</span> בכל פעם שמתחילים session — זה מה שנותן לו את ההקשר הספציפי של הפרויקט שלך.</p>
+        <p>בלי CLAUDE.md, Claude מתנהג כמו freelancer שנכנס לפרויקט ביומו הראשון. עם CLAUDE.md טוב — הוא מתנהג כמו מפתח בכיר שכבר עובד אצלך חצי שנה.</p>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">שים לב</div>
+          <div class="callout-text">CLAUDE.md הוא ה-<strong>הבדל הכי גדול</strong> בין תוצאות מאכזבות לתוצאות מדהימות. מפתחים שמדלגים על זה מתלוננים ש-Claude "לא מבין" — בדרך כלל הבעיה היא שאין CLAUDE.md.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>מה לכתוב ב-CLAUDE.md?</strong></p>
+        <ul>
+          <li>🌐 <strong>שפה:</strong> "תענה תמיד בעברית" / "Answer in English"</li>
+          <li>🏗️ <strong>ארכיטקטורה:</strong> תיאור המבנה הכללי של הפרויקט</li>
+          <li>📏 <strong>סגנון קוד:</strong> ESLint, Prettier, naming conventions</li>
+          <li>🚫 <strong>מה אסור לגעת:</strong> קבצים/תיקיות שאסור לשנות</li>
+          <li>🔑 <strong>APIs ושירותים:</strong> אילו שירותים בשימוש ואיך</li>
+          <li>🧪 <strong>Testing:</strong> איך כותבים tests בפרויקט</li>
+          <li>📦 <strong>Package manager:</strong> npm / yarn / pnpm</li>
+        </ul>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">CLAUDE.md — דוגמה מלאה</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-markdown"># הנחיות לעבודה — פרויקט MyApp
+
+## שפה ותקשורת
+- תענה תמיד בעברית
+- הסברים טכניים — בעברית אבל שמות קבצים/פקודות באנגלית
+
+## ארכיטקטורה
+- Frontend: React 18 + TypeScript + Vite
+- Backend: Node.js + Express + PostgreSQL
+- State: Zustand (לא Redux!)
+- Styling: Tailwind CSS בלבד — אסור CSS modules
+
+## כללי עבודה
+- לפני כל שינוי גדול — לשאול ולקבל אישור
+- תמיד לכתוב TypeScript strict mode
+- לא לשנות שום קובץ ב-/db/migrations/ ישירות
+- package manager: pnpm בלבד (לא npm!)
+
+## מה אסור לגעת
+- /src/core/auth/ — מנוהל על ידי צוות אחר
+- .env* — לא לשנות, לא ליצור
+- /public/legacy/ — קוד ישן שלא נוגעים בו
+
+## Testing
+- כל פיצ'ר חדש חייב unit test ב-Vitest
+- Integration tests ב-/tests/integration/
+- לא מדביקים ב-main בלי tests ירוקים
+
+## Naming conventions
+- קבצי components: PascalCase.tsx
+- hooks: use + camelCase.ts
+- utils: camelCase.ts
+- קבצי API routes: kebab-case.ts</code></pre>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4 ===== -->
+    <section class="section" id="s4">
+      <div class="section-header">
+        <div class="section-icon">🔄</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 4</div>
+          <h2 class="section-title">תהליך העבודה הנכון</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p>המפתחים המנוסים ב-Claude Code פועלים לפי תהליך מובנה. דילוג על שלבים — בעיקר שלב התכנון — מוביל לתוצאות גרועות ולבזבוז זמן.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">א</div>
+          <div class="step-body">
+            <div class="step-title">מחקר (Research) <span class="step-badge">לפני הכל</span></div>
+            <div class="step-content">
+              בקש מ-Claude לחקור <strong>לעומק</strong> לפני שמתחילים לכתוב קוד.
+              השתמש במילים כמו <code>"deeply"</code>, <code>"in great detail"</code>, <code>"go through everything"</code>.
+              בקש שיכתוב <code>research.md</code> עם הממצאים.
+            </div>
+            <div class="callout callout-info" style="margin-top:14px;">
+              <span class="callout-icon">💬</span>
+              <div class="callout-body">
+                <div class="callout-title">דוגמת prompt</div>
+                <div class="callout-text">"Deeply investigate the codebase and understand how authentication works. Go through every relevant file in great detail. Write your findings to research.md — don't write any code yet."</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">ב</div>
+          <div class="step-body">
+            <div class="step-title">תכנון (Plan) <span class="step-badge">קריטי</span></div>
+            <div class="step-content">
+              בקש מ-Claude לכתוב תוכנית יישום מפורטת לקובץ <code>plan.md</code> — <strong>מבלי לכתוב קוד</strong>.
+              עבור לבעיות מורכבות: לחץ <kbd>Shift</kbd>+<kbd>Tab</kbd> כדי להיכנס ל-Plan Mode.
+              הוסף <code>"think hard"</code> או <code>"think deeply"</code> להוראות מורכבות.
+            </div>
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots"><span></span><span></span><span></span></div>
+                <span class="code-lang">prompt לתכנון</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <pre><code class="language-text">כתוב תוכנית יישום מפורטת ל-plan.md.
+חשוב hard על כל edge case.
+אל תכתוב קוד עדיין — רק תוכנית.</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">ג</div>
+          <div class="step-body">
+            <div class="step-title">סקירה ואנוטציות</div>
+            <div class="step-content">
+              פתח את <code>plan.md</code> בעורך הקוד שלך.
+              קרא אותו <strong>בעצמך</strong> והוסף הערות inline בכל מקום שיש לך שאלה או הסתייגות.
+              שלח את Claude בחזרה לעדכן את התוכנית לפי ההערות.
+            </div>
+            <div class="callout callout-tip">
+              <span class="callout-icon">✅</span>
+              <div class="callout-body">
+                <div class="callout-title">המלצה</div>
+                <div class="callout-text">זה השלב שבו ה<strong>מומחיות שלך</strong> נכנסת לתמונה. Claude טוב בקוד — אתה יודע את הדרישות העסקיות. השקע כאן.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">ד</div>
+          <div class="step-body">
+            <div class="step-title">ביצוע (Execute) <span class="step-badge">עכשיו בלבד</span></div>
+            <div class="step-content">
+              רק אחרי שאישרת את התוכנית — תן ל-Claude לממש.
+              אמור פשוט: <code>"עכשיו תבצע את plan.md"</code>.
+              <strong>אל תפריע</strong> לדברים ברורים — תן לו לרוץ.
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">ה</div>
+          <div class="step-body">
+            <div class="step-title">Review & Ship 🚀</div>
+            <div class="step-content">
+              בדוק את הקוד, הרץ tests, עשה review.
+              אם יש בעיות — paste הבאג ופשוט כתוב <code>"fix"</code>.
+              Claude מתקן את רוב הבאגים לבד בלי ניהול מיקרו.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5 ===== -->
+    <section class="section" id="s5">
+      <div class="section-header">
+        <div class="section-icon">⌨️</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 5</div>
+          <h2 class="section-title">פקודות מובנות חשובות</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>פקודה / קיצור</th>
+              <th>תיאור</th>
+              <th>מתי להשתמש</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>/help</td>
+              <td>רשימת כל הפקודות הזמינות</td>
+              <td>כשאתה רוצה לגלות יכולות חדשות</td>
+            </tr>
+            <tr>
+              <td>/status</td>
+              <td>מצב ה-session הנוכחי — כמה tokens נצרכו</td>
+              <td>לפני compact, לניטור עלויות</td>
+            </tr>
+            <tr>
+              <td>/clear</td>
+              <td>מחיקת כל ההיסטוריה של ה-session</td>
+              <td>כשמתחילים משימה חדשה לגמרי</td>
+            </tr>
+            <tr>
+              <td>/compact</td>
+              <td>דחיסת ההיסטוריה לסיכום קצר</td>
+              <td>כשה-context מתמלא ורוצים להמשיך</td>
+            </tr>
+            <tr>
+              <td>/rewind</td>
+              <td>חזרה ל-checkpoint קודם</td>
+              <td>כשמשהו השתבש ורוצים לחזור אחורה</td>
+            </tr>
+            <tr>
+              <td>/resume</td>
+              <td>פתיחת session picker</td>
+              <td>לחזור לשיחה קודמת שנשמרה</td>
+            </tr>
+            <tr>
+              <td>/rename</td>
+              <td>שינוי שם ל-session הנוכחי</td>
+              <td>לארגון sessions לפי נושאים</td>
+            </tr>
+            <tr>
+              <td>/branch</td>
+              <td>פיצול ה-session הנוכחי</td>
+              <td>לניסוי approach שני במקביל</td>
+            </tr>
+            <tr>
+              <td><kbd>Esc</kbd></td>
+              <td>עצירת Claude באמצע ביצוע</td>
+              <td>כשרוצים לתקן הוראה שגויה</td>
+            </tr>
+            <tr>
+              <td><kbd>Esc</kbd> + <kbd>Esc</kbd></td>
+              <td>פתיחת תפריט checkpoints</td>
+              <td>לניווט בין נקודות שמירה</td>
+            </tr>
+            <tr>
+              <td><kbd>Shift</kbd>+<kbd>Tab</kbd></td>
+              <td>כניסה / יציאה מ-Plan Mode</td>
+              <td>לתכנון ללא ביצוע</td>
+            </tr>
+            <tr>
+              <td>!פקודה</td>
+              <td>הרצת פקודת shell ישירות</td>
+              <td><code>!git status</code>, <code>!npm test</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">טיפ: Plan Mode</div>
+          <div class="callout-text">כשנכנסים ל-Plan Mode עם <kbd>Shift</kbd>+<kbd>Tab</kbd>, Claude יכתוב תוכנית אבל <strong>לא יבצע שום שינוי בקבצים</strong>. אידיאלי לאימות הגישה לפני הביצוע.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6 ===== -->
+    <section class="section" id="s6">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 6</div>
+          <h2 class="section-title">Custom Slash Commands</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>Custom Slash Commands</strong> מאפשרים לך ליצור פקודות מותאמות אישית לפרויקט שלך.
+        יוצרים קובץ Markdown בתיקייה <code>.claude/commands/</code> — ואפשר להפעיל אותו עם <code>/שם-הפקודה</code> מתוך Claude.</p>
+        <p>כל קובץ <code>.md</code> בתיקייה הזו הופך אוטומטית לפקודה זמינה.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">.claude/commands/new-component.md</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-markdown"># /new-component
+
+צור React component חדש בשם $ARGUMENTS.
+
+## דרישות
+1. קובץ TypeScript (.tsx) ב-/src/components/
+2. Interface מלא ל-Props
+3. Storybook story (.stories.tsx) לצד הקובץ
+4. Unit test בסיסי עם Vitest
+5. Export מ-/src/components/index.ts
+
+## סגנון
+- Functional component בלבד (לא class)
+- CSS דרך Tailwind utility classes
+- memo() אם ה-component נטהר (pure)
+- aria-label לאלמנטים אינטראקטיביים
+
+## דוגמה לשימוש
+/new-component UserAvatar</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">.claude/commands/review-security.md</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-markdown"># /review-security
+
+בצע סקירת אבטחה מקיפה על הקוד שצוין: $ARGUMENTS
+
+## בדוק את הנושאים הבאים
+- SQL injection ב-queries
+- XSS vulnerabilities ב-rendering
+- CSRF protection ב-forms
+- Authentication bypasses
+- Sensitive data exposure (passwords, keys)
+- Insecure direct object references
+- Rate limiting חסר
+
+## פורמט הדוח
+עבור כל ממצא:
+- **חומרה:** CRITICAL / HIGH / MEDIUM / LOW
+- **קובץ + שורה**
+- **תיאור הבעיה**
+- **קוד לתיקון**</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">.claude/commands/refactor-plan.md</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-markdown"># /refactor-plan
+
+צור תוכנית refactoring מפורטת עבור: $ARGUMENTS
+
+## תהליך
+1. קרא את הקוד הנוכחי לעומק
+2. זהה code smells וטכנות חוב
+3. הצע שלבי refactoring מסודרים
+4. שמור backward compatibility
+5. כתוב לrefactor-plan.md — אל תשנה קוד עדיין!
+
+## מה לכסות
+- מה משתנה ולמה
+- סיכוני regression
+- סדר ביצוע מומלץ
+- tests שיש לכתוב לפני</code></pre>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">$ARGUMENTS</div>
+          <div class="callout-text">השתמש ב-<code>$ARGUMENTS</code> בקובץ ה-command כדי לקבל את הטקסט שמועבר אחרי שם הפקודה. לדוגמה: <code>/new-component UserCard</code> — ה-<code>$ARGUMENTS</code> יהיה "UserCard".</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 7 ===== -->
+    <section class="section" id="s7">
+      <div class="section-header">
+        <div class="section-icon">🪝</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 7</div>
+          <h2 class="section-title">Hooks — אוטומציה על אירועים</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>Hooks</strong> מאפשרים להריץ פקודות shell אוטומטיות בתגובה לאירועים של Claude Code. מגדירים אותם בקובץ ה-settings (<code>.claude/settings.json</code>).</p>
+        <ul style="margin-top:12px;">
+          <li><strong>PreToolUse</strong> — לפני שClaude מריץ כלי (כתיבה, shell, וכו')</li>
+          <li><strong>PostToolUse</strong> — אחרי שClaude סיים להשתמש בכלי</li>
+          <li><strong>Stop</strong> — כשClaude מסיים תגובה</li>
+          <li><strong>SessionStart</strong> — בתחילת session חדש</li>
+        </ul>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">.claude/settings.json — Hook: Linter אחרי שמירה</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run lint --fix 2>&1 | tail -5"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">.claude/settings.json — Hook: מניעת commit בלי tests</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-json">{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q 'git commit'; then npm test --passWithNoTests || (echo 'ERROR: Tests must pass before commit!' && exit 1); fi"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">.claude/settings.json — Hook: הודעה כשClaude מסיים</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-json">{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude סיים את המשימה\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">שים לב לאבטחה</div>
+          <div class="callout-text">Hooks מריצים פקודות shell עם הרשאות מלאות. וודא שהפקודות בטוחות ולא חשופות לCommand Injection אם הן מקבלות קלט חיצוני.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8 ===== -->
+    <section class="section" id="s8">
+      <div class="section-header">
+        <div class="section-icon">🌐</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 8</div>
+          <h2 class="section-title">Subagents ו-MCP Servers</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>Subagents</strong> הם מופעים של Claude שמופעלים מתוך Claude Code לביצוע משימות מקבילות. כל subagent פועל בcontext נפרד ויכול לטפל במשימה שונה בו-זמנית.</p>
+        <p><strong>מתי להשתמש בsubagents?</strong> כשיש משימות גדולות שניתן לפצל — לדוגמה, לבדוק 5 מודולים שונים במקביל.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">דוגמת שימוש ב-Subagents</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-text">הפעל 3 subagents במקביל:
+1. Agent א: בדוק security vulnerabilities ב-/src/api/
+2. Agent ב: כתוב unit tests לכל function ב-/src/utils/
+3. Agent ג: עשה performance audit ל-/src/components/
+
+כל agent יכתוב ממצאים לקובץ נפרד.</code></pre>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <p><strong>MCP (Model Context Protocol)</strong> הוא פרוטוקול שמאפשר לClaude לתקשר עם כלים חיצוניים — דטאבייסים, браузרים, APIs ועוד.</p>
+      </div>
+
+      <div class="mcp-grid">
+        <div class="mcp-card">
+          <div class="mcp-icon">🎭</div>
+          <div class="mcp-name">Playwright</div>
+          <div class="mcp-desc">אוטומציה של דפדפן, E2E tests, screenshot ודיבוג UI</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-icon">🐘</div>
+          <div class="mcp-name">PostgreSQL</div>
+          <div class="mcp-desc">שאילתות ישירות ל-DB, migrations, ניתוח נתונים</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-icon">💬</div>
+          <div class="mcp-name">Slack</div>
+          <div class="mcp-desc">שליחת הודעות, קריאת ערוצים, עדכון סטטוס</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-icon">🎨</div>
+          <div class="mcp-name">Figma</div>
+          <div class="mcp-desc">קריאת עיצובים, הפקת קוד מ-mockups</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-icon">🐙</div>
+          <div class="mcp-name">GitHub</div>
+          <div class="mcp-desc">PRs, issues, code reviews, workflows</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-icon">🔍</div>
+          <div class="mcp-name">Brave Search</div>
+          <div class="mcp-desc">חיפוש באינטרנט, תיעוד עדכני, Stack Overflow</div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">.claude/settings.json — חיבור MCP Servers</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-json">{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_URL": "postgresql://user:pass@localhost/mydb"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "your-token-here"
+      }
+    }
+  }
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 9 ===== -->
+    <section class="section" id="s9">
+      <div class="section-header">
+        <div class="section-icon">🧠</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 9</div>
+          <h2 class="section-title">ניהול Context וזיכרון</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">הבעיה: Claude שוכח</div>
+          <div class="callout-text">בsessions ארוכים, ה-context window מתמלא. Claude מתחיל "לשכוח" מה קרה בתחילת השיחה — מה שמוביל לשגיאות ולחוסר עקביות.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>הפתרון: ניהול context מודע</strong></p>
+        <ul>
+          <li><strong>Session logs:</strong> שמור ממצאים חשובים לקבצים (research.md, plan.md) — לא רק בשיחה</li>
+          <li><strong>/compact:</strong> פקודה שמסכמת את ההיסטוריה לתמצית קצרה ומשמרת context</li>
+          <li><strong>/status:</strong> בדוק כמה context נצרך לפני שמתחיל להיות בעיה</li>
+          <li><strong>תיקיות logs:</strong> <code>quality_reports/</code>, <code>session_notes/</code> לשמירת התקדמות</li>
+        </ul>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">הגדרת Auto-Compact</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-bash"># הגדר את גודל החלון לפני auto-compact (ב-tokens)
+export CLAUDE_CODE_AUTO_COMPACT_WINDOW=8000
+
+# הוסף ל-.bashrc / .zshrc להגדרה קבועה</code></pre>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">הטריק הכי שימושי: אחרי Compaction</div>
+          <div class="callout-text">כשClaude מודיע שהיה compaction, שלח:<br>
+          <code>"We just had compaction. Read plan.md and continue from where we left off."</code><br>
+          זה מחזיר אותו מיד לעניינים בלי לחזור על ההיסטוריה.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="mini-card">
+          <div class="mc-icon">📁</div>
+          <div class="mc-title">שמור תמיד לקבצים</div>
+          <div class="mc-text">כל החלטה חשובה, כל ממצא מחקר, כל תוכנית — לקובץ. לא רק בשיחה.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🔄</div>
+          <div class="mc-title">/compact בזמן</div>
+          <div class="mc-text">הרץ /compact לפני שהcontext מתמלא לגמרי — לא רק כשיש בעיה.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🏷️</div>
+          <div class="mc-title">שמות ל-sessions</div>
+          <div class="mc-text">השתמש ב-/rename כדי לתת שמות משמעותיים — "feature-auth", "fix-perf" וכו'.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🌿</div>
+          <div class="mc-title">Branch לניסויים</div>
+          <div class="mc-text">לפני ניסוי גישה לא ודאית — /branch כדי לשמור session בטוח לחזרה.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 10 ===== -->
+    <section class="section" id="s10">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 10</div>
+          <h2 class="section-title">טיפים מתקדמים</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="mini-card">
+          <div class="mc-icon">⚡</div>
+          <div class="mc-title">cc alias</div>
+          <div class="mc-text"><code>alias cc="claude --dangerously-skip-permissions"</code> — לסביבת dev מקומית. חוסך אישורים לכל פעולה.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">💻</div>
+          <div class="mc-title">Shell ישירות</div>
+          <div class="mc-text">כתוב <code>!git status</code> בתוך Claude להרצת פקודות shell מיידיות בלי לצאת.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🧠</div>
+          <div class="mc-title">Think Hard</div>
+          <div class="mc-text">הוסף <code>"think hard"</code> לבעיות מורכבות — Claude מקצה יותר זמן חשיבה לפני תשובה.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🔮</div>
+          <div class="mc-title">Prove It</div>
+          <div class="mc-text"><code>"prove to me this works"</code> — גורם לClaude לכתוב test שמוכיח שהפתרון עובד.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🏗️</div>
+          <div class="mc-title">Elegant Refactor</div>
+          <div class="mc-text">אחרי תיקון בינוני: <code>"knowing everything you know now, scrap this and implement the elegant solution"</code></div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🐛</div>
+          <div class="mc-title">Paste & Fix</div>
+          <div class="mc-text">לבאגים: paste the error, כתוב <code>"fix"</code>. אל תנסה להסביר יותר — Claude מבין לבד.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">Plan Mode vs Normal Mode — מתי לעבור?</div>
+          <div class="callout-text">
+            <strong>Normal Mode:</strong> משימות ברורות, תיקוני bugs, שינויים קטנים<br>
+            <strong>Plan Mode (<kbd>Shift</kbd>+<kbd>Tab</kbd>):</strong> פיצ'רים חדשים, refactoring גדול, כשלא בטוח מה הגישה הנכונה
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">Prompts מתקדמים שעובדים</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-text"># לבעיות קשות:
+"think deeply about this. What are all the edge cases?
+Prove each assumption. Only then write the solution."
+
+# לrefactoring:
+"Knowing everything you know about this codebase now,
+what is the most elegant way to implement this?
+Scrap the current approach if needed."
+
+# לcode review:
+"Review this code like a senior engineer at Google.
+Be brutal. Focus on correctness, not style."
+
+# לdebugging מורכב:
+"Deeply investigate why this bug occurs.
+Read every relevant file. Build a hypothesis.
+Show me the root cause, not just the symptom."</code></pre>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 11 ===== -->
+    <section class="section" id="s11">
+      <div class="section-header">
+        <div class="section-icon">⚠️</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 11</div>
+          <h2 class="section-title">שגיאות נפוצות ואיך להימנע</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="error-grid">
+        <div class="error-item">
+          <div class="error-x">✗</div>
+          <div class="error-content">
+            <div class="error-title">דילוג על תכנון וקפיצה ישר לקוד</div>
+            <div class="error-desc">לבקש מClaude לכתוב קוד בלי שלב מחקר ותכנון קודם מוביל לפתרונות שגויים שקשה לתקן.</div>
+            <div class="error-fix">✓ תמיד: Research → Plan → Review → Execute</div>
+          </div>
+        </div>
+
+        <div class="error-item">
+          <div class="error-x">✗</div>
+          <div class="error-content">
+            <div class="error-title">לא לכתוב CLAUDE.md</div>
+            <div class="error-desc">Claude לא יודע על הארכיטקטורה, הכללים, ומה אסור לגעת. כל session מתחיל מאפס.</div>
+            <div class="error-fix">✓ צור CLAUDE.md בשורש הפרויקט לפני הכל</div>
+          </div>
+        </div>
+
+        <div class="error-item">
+          <div class="error-x">✗</div>
+          <div class="error-content">
+            <div class="error-title">להפריע לClaude באמצע ביצוע</div>
+            <div class="error-desc">לשלוח הודעות בזמן שClaude עובד מבלבל אותו ומוביל לתוצאות חלקיות.</div>
+            <div class="error-fix">✓ תן לו לסיים. אם צריך לעצור — <kbd>Esc</kbd></div>
+          </div>
+        </div>
+
+        <div class="error-item">
+          <div class="error-x">✗</div>
+          <div class="error-content">
+            <div class="error-title">הוראות עמומות בלי הקשר</div>
+            <div class="error-desc">"תקן את הבאג" בלי לציין איזה באג, איפה, ומה התנהגות הצפויה.</div>
+            <div class="error-fix">✓ תן הקשר מלא: error message + stack trace + expected behavior</div>
+          </div>
+        </div>
+
+        <div class="error-item">
+          <div class="error-x">✗</div>
+          <div class="error-content">
+            <div class="error-title">לא לבדוק plan.md לפני ביצוע</div>
+            <div class="error-desc">אם Claude יש גישה לבדוק, גם לך יש. חצי שעה בדיקה חוסכת שעות של תיקונים.</div>
+            <div class="error-fix">✓ פתח plan.md, קרא כל שורה, הוסף הערות</div>
+          </div>
+        </div>
+
+        <div class="error-item">
+          <div class="error-x">✗</div>
+          <div class="error-content">
+            <div class="error-title">לנהל מיקרו כל שורת קוד</div>
+            <div class="error-desc">לבקש שינויים קטנים כל הזמן — "שנה את שם המשתנה", "הוסף רווח" — זה מבזבז context.</div>
+            <div class="error-fix">✓ תן הנחיות ברמה גבוהה, Claude יטפל בdetails</div>
+          </div>
+        </div>
+
+        <div class="error-item">
+          <div class="error-x">✗</div>
+          <div class="error-content">
+            <div class="error-title">להסתמך על Claude לאבטחה</div>
+            <div class="error-desc">Claude לא תמיד מוסיף validation, sanitization, ואימות inputs. לא להניח שזה נעשה.</div>
+            <div class="error-fix">✓ בקש מפורשות /review-security אחרי כל feature</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 12 ===== -->
+    <section class="section" id="s12">
+      <div class="section-header">
+        <div class="section-icon">💬</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 12</div>
+          <h2 class="section-title">Prompts לדוגמה שעובדים</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <p>אלו Prompts מוכנים שתוכל להעתיק ולהשתמש בהם ישירות. כל אחד מותאם לשלב שונה בworkflow.</p>
+      </div>
+
+      <div class="prompt-grid">
+
+        <div class="prompt-card">
+          <div class="prompt-card-header">
+            <div class="prompt-card-title"><span class="icon">🔍</span> Prompt מחקר</div>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">📋 העתק</button>
+          </div>
+          <div class="prompt-card-body">
+            <div class="prompt-text" data-prompt="Deeply investigate the codebase to understand [TOPIC]. Go through every relevant file in great detail. Understand the architecture, data flow, and edge cases. Don't write any code yet. Write all your findings to research.md with clear sections.">Deeply investigate the codebase to understand [TOPIC]. Go through every relevant file in great detail. Understand the architecture, data flow, and edge cases. Don't write any code yet. Write all your findings to research.md with clear sections.</div>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-card-header">
+            <div class="prompt-card-title"><span class="icon">📋</span> Prompt תכנון</div>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">📋 העתק</button>
+          </div>
+          <div class="prompt-card-body">
+            <div class="prompt-text" data-prompt="Based on your research, write a detailed implementation plan to plan.md. Think hard about edge cases and potential issues. Include: files to change, order of changes, risks, and test strategy. Do NOT write any code — only the plan.">Based on your research, write a detailed implementation plan to plan.md. Think hard about edge cases and potential issues. Include: files to change, order of changes, risks, and test strategy. Do NOT write any code — only the plan.</div>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-card-header">
+            <div class="prompt-card-title"><span class="icon">⚡</span> Prompt ביצוע</div>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">📋 העתק</button>
+          </div>
+          <div class="prompt-card-body">
+            <div class="prompt-text" data-prompt="The plan in plan.md has been reviewed and approved. Now execute it step by step. After each major step, confirm it works before moving on. If you encounter anything unexpected, stop and tell me before continuing.">The plan in plan.md has been reviewed and approved. Now execute it step by step. After each major step, confirm it works before moving on. If you encounter anything unexpected, stop and tell me before continuing.</div>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-card-header">
+            <div class="prompt-card-title"><span class="icon">🐛</span> Prompt Debug</div>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">📋 העתק</button>
+          </div>
+          <div class="prompt-card-body">
+            <div class="prompt-text" data-prompt="[PASTE ERROR + STACK TRACE]
+
+Deeply investigate the root cause of this error. Don't fix symptoms — find and fix the actual cause. Read every relevant file. Explain what's going wrong and why, then fix it.">[ PASTE ERROR + STACK TRACE ]
+
+Deeply investigate the root cause of this error. Don't fix symptoms — find and fix the actual cause. Read every relevant file. Explain what's going wrong and why, then fix it.</div>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-card-header">
+            <div class="prompt-card-title"><span class="icon">♻️</span> Prompt Refactor</div>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">📋 העתק</button>
+          </div>
+          <div class="prompt-card-body">
+            <div class="prompt-text" data-prompt="Knowing everything you know about this codebase now, what is the most elegant and maintainable way to implement [FEATURE]? Scrap the current approach if needed. Think deeply, then write the plan to refactor-plan.md before touching any code.">Knowing everything you know about this codebase now, what is the most elegant and maintainable way to implement [FEATURE]? Scrap the current approach if needed. Think deeply, then write the plan to refactor-plan.md before touching any code.</div>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-card-header">
+            <div class="prompt-card-title"><span class="icon">👀</span> Prompt Code Review</div>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">📋 העתק</button>
+          </div>
+          <div class="prompt-card-body">
+            <div class="prompt-text" data-prompt="Review the changes in [FILE/PR] like a senior engineer. Be thorough and critical. Check for: correctness, edge cases, security issues, performance problems, test coverage, and code clarity. Give specific, actionable feedback with line references.">Review the changes in [FILE/PR] like a senior engineer. Be thorough and critical. Check for: correctness, edge cases, security issues, performance problems, test coverage, and code clarity. Give specific, actionable feedback with line references.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SECTION 13 ===== -->
+    <section class="section" id="s13">
+      <div class="section-header">
+        <div class="section-icon">🗺️</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 13</div>
+          <h2 class="section-title">התחלת פרויקט נכון</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p>לפני שכותבים שורת קוד אחת — יש לעבור שלב <strong>Discovery</strong>. 14 שאלות שקובעות את כל הארכיטקטורה של הפרויקט.</p>
+      </div>
+
+      <div class="card">
+        <p><strong>14 שאלות Discovery</strong></p>
+        <p style="color:var(--accent);font-weight:700;margin-top:16px;margin-bottom:8px;">עסקי ותהליכי:</p>
+        <ol>
+          <li>איזה תהליך צריך אוטומציה?</li>
+          <li>מי המשתמשים? (תפקידים, כמויות)</li>
+          <li>אילו כלים בשימוש היום?</li>
+          <li>מה נקודת הכאב הראשית?</li>
+          <li>מתי הפרויקט "הצליח"?</li>
+        </ol>
+        <p style="color:var(--accent);font-weight:700;margin-top:16px;margin-bottom:8px;">טכני:</p>
+        <ol start="6">
+          <li>מערכות קיימות לאינטגרציה?</li>
+          <li>האם צריך תמיכת מובייל?</li>
+          <li>כמות משתמשים במקביל?</li>
+          <li>דרישות אבטחה / compliance?</li>
+          <li>איפה הנתונים יושבים היום?</li>
+        </ol>
+        <p style="color:var(--accent);font-weight:700;margin-top:16px;margin-bottom:8px;">פלט:</p>
+        <ul>
+          <li>Project Brief — עמוד אחד עם תיאור, תפקידי משתמשים, 3-5 user stories, אילוצים, ומדדי הצלחה</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">💬</span>
+        <div class="callout-body">
+          <div class="callout-title">Prompt לתכנון ארכיטקטורה</div>
+          <div class="callout-text"><code>"אני מתחיל פרויקט CRM. הנה ה-brief: [צרף]. תכנן לי את הארכיטקטורה — Entity map, שדות, קשרים, RLS, ו-phases."</code></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>4 שלבי פיתוח — ה-Phases</strong></p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">0</div>
+          <div class="step-body">
+            <div class="step-title">Foundation <span class="step-badge">1-2 ימים</span></div>
+            <div class="step-content">
+              DB + RLS + Triggers · Auth Login + Roles · Layout Sidebar + RTL · Deploy Vercel + GitHub<br><br>
+              <strong>כלל ברזל:</strong> אחרי Phase 0 המערכת חייבת לרוץ — login עובד, layout מוכן, DB מוגדר.
+            </div>
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">prompt</span></div>
+              <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+              <pre><code class="language-text">הקם את ה-foundation של הפרויקט:
+Next.js app, Supabase schema, טבלאות בסיס,
+RLS, auth, ו-deploy ל-Vercel.</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Core CRUD <span class="step-badge">3-5 ימים</span></div>
+            <div class="step-content">
+              בנה מודול אחד שלם בכל iteration.<br>
+              <strong>Prompt לדוגמה:</strong> "בנה את מודול הלקוחות: רשימה עם חיפוש ופילטור, טופס יצירה/עריכה עם Zod validation, דף פרטים עם tabs, ותמיכה בארכיון."
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Enhancement <span class="step-badge">3-5 ימים</span></div>
+            <div class="step-content">
+              Dashboards · Notifications · Advanced search · Automations · Integrations
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Polish 🚀 <span class="step-badge">2-3 ימים</span></div>
+            <div class="step-content">
+              Performance optimization · Error handling · Loading states · Mobile testing · Customer training
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 14 ===== -->
+    <section class="section" id="s14">
+      <div class="section-header">
+        <div class="section-icon">🌿</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 14</div>
+          <h2 class="section-title">עבודה עם Git</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <div class="callout-title">הכלל החשוב ביותר</div>
+          <div class="callout-text">Commit + Push אחרי <strong>כל שלב משמעותי</strong> — לא לפי זמן, אלא לפי השלמה לוגית.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>פורמט commit מומלץ:</strong></p>
+        <ul>
+          <li><code>update [module]: [תיאור]</code> — לשיפורים</li>
+          <li><code>fix [module]: [תיאור]</code> — לתיקוני באגים</li>
+        </ul>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">דוגמאות commits</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-bash">update customers: add archive toggle and soft delete
+update quotes: add PDF export with Hebrew support
+fix tasks: correct status color mapping in kanban
+update auth: add role-based sidebar filtering
+fix messaging: handle WhatsApp webhook retry</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">Branch workflow</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-bash"># פתח branch חדש לפיצ'ר
+git checkout -b feature/shipments-module
+
+# עבוד, commit ו-push
+git add .
+git commit -m "update shipments: add list and detail pages"
+git push origin feature/shipments-module
+
+# אחרי אישור — merge ל-main
+git checkout main
+git merge feature/shipments-module
+git push origin main</code></pre>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">פקודות מסוכנות — תמיד לבקש אישור קודם</div>
+          <div class="callout-text">
+            <code>git reset --hard</code> · <code>git push --force</code> · <code>git clean -f</code><br>
+            Claude חייב לבקש אישור מפורש לפני שמריץ אחת מהפקודות האלו.
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Prompt לClaude</th><th>מה זה עושה</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"תעשה commit ו-push של השינויים"</td><td>Commit כל השינויים ו-push</td></tr>
+            <tr><td>"npm run build, אחרי זה commit + push"</td><td>בדוק build לפני commit</td></tr>
+            <tr><td>"פתח branch חדש בשם feature/payments"</td><td>יוצר branch ועובר אליו</td></tr>
+            <tr><td>"תראה לי מה השתנה מה-commit האחרון"</td><td>git diff HEAD~1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 15 ===== -->
+    <section class="section" id="s15">
+      <div class="section-header">
+        <div class="section-icon">🏗️</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 15</div>
+          <h2 class="section-title">מבנה פרויקט</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">Directory Layout — Next.js App Router</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-bash">src/
+├── app/
+│   ├── (admin)/          # דפים מוגנים
+│   │   ├── layout.tsx
+│   │   ├── dashboard/
+│   │   ├── clients/
+│   │   └── [other modules]/
+│   ├── (auth)/           # login
+│   ├── (portal)/         # תוכן ציבורי
+│   ├── api/
+│   │   ├── webhooks/
+│   │   └── cron/
+│   ├── layout.tsx
+│   └── globals.css
+├── components/
+│   ├── shared/
+│   ├── layout/
+│   ├── clients/
+│   └── [other modules]/
+├── hooks/
+├── lib/
+│   ├── supabase/
+│   ├── schemas/
+│   ├── query-keys.ts
+│   ├── utils.ts
+│   └── constants.ts
+├── stores/
+└── middleware.ts</code></pre>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">כלל 4 המקומות</div>
+          <div class="callout-text">כל מודול חדש חי ב-4 מקומות:<br>
+          1. <code>lib/schemas/[module].schema.ts</code><br>
+          2. <code>hooks/use-[module].ts</code><br>
+          3. <code>components/[module]/</code><br>
+          4. <code>app/(admin)/[module]/</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>Naming Conventions</strong></p>
+        <ul>
+          <li>תיקיות: <code>kebab-case</code></li>
+          <li>Components: <code>PascalCase</code> exports</li>
+          <li>Database: <code>snake_case</code></li>
+          <li>Schemas: <code>*.schema.ts</code></li>
+          <li>Hooks: <code>use-camelCase.ts</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <p><strong>Stack מומלץ (2025)</strong></p>
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead><tr><th>קטגוריה</th><th>טכנולוגיה</th></tr></thead>
+            <tbody>
+              <tr><td>Framework</td><td>Next.js 16 (App Router)</td></tr>
+              <tr><td>Language</td><td>TypeScript (strict mode)</td></tr>
+              <tr><td>Database</td><td>Supabase</td></tr>
+              <tr><td>Data Fetching</td><td>TanStack Query v5</td></tr>
+              <tr><td>State</td><td>Zustand</td></tr>
+              <tr><td>Styling</td><td>Tailwind CSS v4</td></tr>
+              <tr><td>Validation</td><td>Zod</td></tr>
+              <tr><td>RTL / Font</td><td>Heebo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 16 ===== -->
+    <section class="section" id="s16">
+      <div class="section-header">
+        <div class="section-icon">🐘</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 16</div>
+          <h2 class="section-title">Supabase — מדריך מהיר</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">אף פעם לא להשתמש ב-schema ה-public</div>
+          <div class="callout-text">תמיד צור schema ייעודי לפרויקט. <code>public</code> חשוף לכולם כברירת מחדל.</div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">Custom Schema Setup</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-sql">-- צור schema ייעודי
+CREATE SCHEMA IF NOT EXISTS app;
+-- Dashboard → Settings → Integrations → Data API → Exposed schemas → הוסף "app"</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">TypeScript client עם custom schema</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-typescript">const supabase = createClient(url, key, {
+  db: { schema: 'app' }
+});</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">Table Template — כל טבלה חייבת את השדות האלו</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-sql">CREATE TABLE app.customers (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name        TEXT NOT NULL,
+  phone       TEXT,
+  email       TEXT,
+  status_id   UUID REFERENCES app.statuses(id),
+  -- Audit fields (חובה בכל טבלה)
+  created_at  TIMESTAMPTZ DEFAULT now(),
+  created_by  UUID REFERENCES auth.users(id),
+  updated_at  TIMESTAMPTZ DEFAULT now(),
+  updated_by  UUID REFERENCES auth.users(id),
+  deleted_at  TIMESTAMPTZ  -- soft delete
+);
+
+GRANT ALL ON app.customers TO authenticated;
+
+-- Triggers אוטומטיים
+CREATE TRIGGER set_updated_at
+  BEFORE UPDATE ON app.customers
+  FOR EACH ROW EXECUTE FUNCTION app.set_updated_at();
+
+CREATE TRIGGER set_user_fields
+  BEFORE INSERT OR UPDATE ON app.customers
+  FOR EACH ROW EXECUTE FUNCTION app.set_user_fields();</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">RLS — Dynamic Permission System</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-sql">-- פונקציה אחת שמנהלת הכל דרך טבלת permissions
+CREATE FUNCTION app.has_table_permission(
+  user_id   UUID,
+  p_table   TEXT,
+  p_action  TEXT,
+  row_owner UUID DEFAULT NULL
+) RETURNS BOOLEAN AS $$ ... $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- הפעל RLS על הטבלה
+ALTER TABLE app.customers ENABLE ROW LEVEL SECURITY;
+
+-- Policy אחת לכל הפעולות
+CREATE POLICY "rls_customers" ON app.customers
+  USING (app.has_table_permission(auth.uid(), 'customers', 'read', created_by))
+  WITH CHECK (app.has_table_permission(auth.uid(), 'customers', 'create'));
+
+-- Views — תמיד security_invoker
+CREATE VIEW app.dashboard_summary
+  WITH (security_invoker = true) AS
+  SELECT ... FROM app.customers WHERE deleted_at IS NULL;
+GRANT SELECT ON app.dashboard_summary TO authenticated;</code></pre>
+      </div>
+
+      <div class="card">
+        <p><strong>Scope ערכים לטבלת permissions:</strong></p>
+        <ul>
+          <li><code>org</code> — גישה מלאה לכל הרשומות</li>
+          <li><code>own</code> — רק רשומות אישיות</li>
+          <li><code>none</code> — חסום</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <p><strong>ארכיטקטורה Data-Driven — הגדרות מה-DB לא מהקוד</strong></p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">טבלאות configuration</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-sql">-- סטטוסים דינמיים
+CREATE TABLE app.statuses (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  entity_type  TEXT NOT NULL,
+  name         TEXT NOT NULL,
+  display_name TEXT NOT NULL,
+  color        TEXT,
+  sort_order   INT DEFAULT 0,
+  is_default   BOOLEAN DEFAULT false,
+  is_final     BOOLEAN DEFAULT false
+);
+
+-- Feature flags
+CREATE TABLE app.feature_flags (
+  key     TEXT PRIMARY KEY,
+  enabled BOOLEAN DEFAULT false,
+  type    TEXT
+);</code></pre>
+      </div>
+
+      <div class="card">
+        <p><strong>⚠️ Gotchas — טעויות נפוצות עם Supabase</strong></p>
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead><tr><th>בעיה</th><th>סיבה</th><th>פתרון</th></tr></thead>
+            <tbody>
+              <tr><td>תאריך בפורמט אמריקאי</td><td><code>toISOString().split("T")[0]</code></td><td>השתמש ב-<code>getFullYear()/getMonth()/getDate()</code></td></tr>
+              <tr><td>לא ניתן להוסיף עמודה ל-view</td><td><code>CREATE OR REPLACE</code> לא עובד</td><td><code>DROP VIEW</code> ואז <code>CREATE VIEW</code></td></tr>
+              <tr><td>authenticated לא רואה כלום</td><td>חסר GRANT אחרי CREATE</td><td>הוסף <code>GRANT ALL ON ... TO authenticated</code></td></tr>
+              <tr><td>שגיאות דיוק כספי</td><td>שימוש ב-<code>float</code></td><td>השתמש ב-<code>DECIMAL(12,2)</code></td></tr>
+              <tr><td>כל שורות נעלמות בשקט</td><td>Zod schema לא תואם שדות DB</td><td>בדוק alignment של Zod schema</td></tr>
+              <tr><td>שגיאת PGRST106</td><td>custom schema לא חשוף</td><td>Dashboard → Integrations → הוסף schema</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">Auto-generate TypeScript types</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-bash">npx supabase gen types typescript \
+  --project-id YOUR_PROJECT_ID \
+  > src/types/database.ts</code></pre>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 17 ===== -->
+    <section class="section" id="s17">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <div class="section-title-block">
+          <div class="section-num">פרק 17</div>
+          <h2 class="section-title">Parallel Agents — פי 3 מהיר יותר</h2>
+          <div class="section-divider"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p><strong>Parallel Agents</strong> — הפעלת 3 instances של Claude Code במקביל, כל אחד על משימה שונה. זמן ביצוע יורד מ-30 דקות ל-12 דקות.</p>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <div class="compare-header blue">🐌 Sequential — 30 דקות</div>
+          <div class="compare-body">
+            <ul>
+              <li>Claude עושה SQL</li>
+              <li>מחכה שיסיים</li>
+              <li>Claude עושה Types</li>
+              <li>מחכה שיסיים</li>
+              <li>Claude עושה UI</li>
+            </ul>
+          </div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-header orange">🚀 Parallel — 12 דקות</div>
+          <div class="compare-body">
+            <ul>
+              <li>Agent 1: SQL + RLS</li>
+              <li>Agent 2: Types + Hooks</li>
+              <li>Agent 3: UI Components</li>
+              <li>כולם רצים יחד</li>
+              <li>Merge אחרי שסיימו</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-lang">VS Code — 3 טרמינלים במקביל</span></div>
+        <button class="copy-btn" onclick="copyCode(this)">📋 העתק</button>
+        <pre><code class="language-bash"># טרמינל 1 — DB layer
+cd my-project && claude
+# "צור את כל ה-SQL tables, RLS policies, ו-triggers למודול payments"
+
+# טרמינל 2 — Logic layer
+cd my-project && claude
+# "צור TypeScript types ו-hooks ל-payments module בהתאם ל-DB schema"
+
+# טרמינל 3 — UI layer
+cd my-project && claude
+# "צור את כל ה-UI components ל-payments: list, form, details"</code></pre>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">חשוב: הימנע מ-conflicts</div>
+          <div class="callout-text">כל agent עובד על <strong>קבצים שונים לחלוטין</strong>. אם שניים עובדים על אותו קובץ בו-זמנית — יהיו conflicts. תכנן את החלוקה מראש.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="mini-card">
+          <div class="mc-icon">🔄</div>
+          <div class="mc-title">SQL Migrations</div>
+          <div class="mc-text"><code>npx supabase migration new add_payments_module</code><br>
+          → <code>supabase/migrations/20260316_add_payments.sql</code><br>
+          <code>npx supabase db push</code></div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">📝</div>
+          <div class="mc-title">Background Skill Updates</div>
+          <div class="mc-text">Claude יכול לעדכן קבצי Skills ברקע בזמן שהוא עובד על המשימה הראשית — בלי להפסיק.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">🪝</div>
+          <div class="mc-title">TypeScript Hook אוטומטי</div>
+          <div class="mc-text">הגדר Hook שמריץ <code>npx tsc --noEmit</code> אוטומטית אחרי כל שמירה — Claude מקבל feedback מיידי.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-icon">⚡</div>
+          <div class="mc-title">Custom Command /new-module</div>
+          <div class="mc-text"><code>/new-module shipments</code> — פקודה שמריצה את כל תהליך בניית מודול חדש בצעדים.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>נבנה עם ❤️ כמדריך עברי מקיף ל-Claude Code</p>
+      <p style="margin-top:8px;">
+        <a href="https://docs.anthropic.com/claude-code" target="_blank">תיעוד רשמי</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+      </p>
+    </footer>
+
+  </div>
+</main>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="חזרה לראש">↑</button>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+
+<script>
+// ===== Theme Toggle =====
+function toggleTheme() {
+  const body = document.body;
+  const icon = document.getElementById('themeIcon');
+  if (body.dataset.theme === 'dark') {
+    body.dataset.theme = 'light';
+    icon.textContent = '☀️';
+  } else {
+    body.dataset.theme = 'dark';
+    icon.textContent = '🌙';
+  }
+}
+
+// ===== Sidebar Mobile =====
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+function closeSidebarMobile() {
+  if (window.innerWidth <= 900) closeSidebar();
+}
+
+// ===== Copy Code =====
+function copyCode(btn) {
+  const pre = btn.nextElementSibling;
+  const code = pre.querySelector('code');
+  const text = code ? code.textContent : pre.textContent;
+  navigator.clipboard.writeText(text.trim()).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ הועתק!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ===== Copy Prompt =====
+function copyPrompt(btn) {
+  const body = btn.closest('.prompt-card').querySelector('.prompt-text');
+  const text = body.dataset.prompt || body.textContent;
+  navigator.clipboard.writeText(text.trim()).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ הועתק!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ===== Scroll & Progress =====
+const sections = document.querySelectorAll('.section[id]');
+const navItems = document.querySelectorAll('.nav-item');
+const progressFill = document.getElementById('progressFill');
+const progressPct = document.getElementById('progressPct');
+const backToTop = document.getElementById('backToTop');
+
+function updateOnScroll() {
+  const scrollY = window.scrollY;
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = Math.round((scrollY / docH) * 100);
+  progressFill.style.width = pct + '%';
+  progressPct.textContent = pct + '%';
+
+  // Back to top
+  backToTop.classList.toggle('visible', scrollY > 400);
+
+  // Active nav
+  let currentId = '';
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 120;
+    if (scrollY >= top) currentId = sec.id;
+  });
+
+  navItems.forEach(item => {
+    const href = item.getAttribute('href');
+    item.classList.toggle('active', href === '#' + currentId);
+  });
+}
+
+// ===== Intersection Observer for animations =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+sections.forEach(sec => observer.observe(sec));
+
+// ===== Back to top =====
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== Init =====
+window.addEventListener('scroll', updateOnScroll, { passive: true });
+updateOnScroll();
+
+// Trigger hero animation
+document.querySelector('.hero').style.animation = 'fadeInUp 0.6s ease both';
+
+// Prism re-highlight after load
+window.addEventListener('load', () => {
+  if (typeof Prism !== 'undefined') Prism.highlightAll();
+});
+</script>
+</body>
+</html>
